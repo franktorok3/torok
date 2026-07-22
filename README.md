@@ -12,32 +12,15 @@ Torok works immediately with **no API key** and **no environment variables**.
 
 Responses come from a curated local library of classical Jewish teachings. The engine classifies themes with keyword matching and composes a warm, structured reflection. It does **not** pretend to be a generative AI model.
 
-An optional server-side inference provider can be added later (see `.env.example`). External inference is never required for launch, and secrets never ship to the browser.
-
-## Stack
-
-- Next.js (App Router) + TypeScript + React
-- Tailwind CSS
-- Vitest for the wisdom engine and safety routing
-- Vercel Hobby-tier hosting
-
-No database. No accounts. No analytics.
-
-## Local setup
-
-```bash
-npm install
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
+Shareable links use `?lens=<teaching-id>` only — they never store private user text.
 
 ## Scripts
 
 | Command | Purpose |
 | --- | --- |
 | `npm run dev` | Local development server |
-| `npm run test` | Wisdom engine + safety tests |
+| `npm run test` | Wisdom engine + safety + audit tests |
+| `npm run audit:content` | Development-only content integrity audit |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript |
 | `npm run build` | Production build |

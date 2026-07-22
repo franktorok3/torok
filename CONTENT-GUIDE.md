@@ -5,11 +5,13 @@ This guide explains how to add and maintain teachings in Torok’s curated libra
 ## Principles
 
 1. **Do not invent quotations.** Every teaching must map to a real, checkable classical source.
-2. **Prefer paraphrases.** Label them clearly with the word “Paraphrase:”.
-3. **Cite the location** (book, chapter/verse, tractate, or standard code section).
-4. **One useful lens, not the only Jewish position.** Avoid language that collapses the tradition into a single ruling.
-5. **No psak.** Torok does not decide what someone “must” do under Jewish law.
-6. **No casual sacred names** in decorative UI chrome.
+2. **Separate layers clearly.** Biblical wording, later commentary, and modern application must not be merged into one undifferentiated claim.
+3. **Prefer paraphrases** when exact wording or translation rights are uncertain. Label via `textKind: "paraphrase"`.
+4. **Attribute translations** whenever `textKind` is `"quotation"`.
+5. **One useful lens, not the only Jewish position.**
+6. **No psak.** Torok does not decide what someone “must” do under Jewish law.
+7. **No casual sacred names** in decorative UI chrome.
+8. **Never mark the library educator-reviewed** until a qualified rabbi or Jewish educator has actually reviewed it.
 
 ## Teaching shape
 
@@ -18,18 +20,29 @@ Each entry in `src/lib/wisdom/teachings.ts` includes:
 | Field | Purpose |
 | --- | --- |
 | `id` | Stable unique id |
-| `theme` | One of the supported theme keys |
-| `themeLabel` | Human-readable theme name |
-| `source` | Citation a learner can look up |
-| `paraphrase` | Careful paraphrase beginning with “Paraphrase:” |
-| `explanation` | Plain-language context |
-| `takeaway` | One practical step for today |
-| `reflectionQuestion` | A question to carry |
-| `keywords` | Matching terms (lowercase phrases welcome) |
+| `theme` / `themeLabel` | Theme key and label |
+| `sources[]` | Canonical citation + optional URL |
+| `textKind` | `"quotation"` or `"paraphrase"` |
+| `text` | Exact quotation or paraphrase body |
+| `translationAttribution` | Required for quotations |
+| `historicalContext` | Historical / interpretive context |
+| `modernApplication` | Contemporary application (not source language) |
+| `takeaway` | “Try this today” |
+| `reflectionQuestion` | Question to carry |
+| `acknowledgment` | Brief empathetic opener |
+| `viewpoint` | Tradition or lens when relevant |
+| `keywords` | Matching terms |
+| `reviewStatus` | `draft` \| `awaiting-educator-review` \| `educator-reviewed` |
 
-## Supported themes
+## Content audit
 
-Patience, repair, relationships, leadership, courage, gratitude, community, justice, rest, speech, uncertainty, learning, generosity, technology.
+Run:
+
+```bash
+npm run audit:content
+```
+
+The audit flags missing citations, unattributed translations, duplicate identifiers, modern applications that sound like source language, and entries awaiting human review.
 
 ## Tone
 
@@ -41,25 +54,9 @@ Prefer:
 - “A way to carry this into today might be…”
 - “Jewish tradition contains several perspectives; one useful lens is…”
 
-Avoid:
-
-- “The Torah says you must…” (unless the text and context truly warrant it, which is rare for this product)
-- Spiritual authority cosplay
-- Therapy or clinical diagnosis
-
 ## Safety
 
 `src/lib/wisdom/safety.ts` routes crisis, abuse, medical, legal, and halacha-seeking language.
 
 - Crisis / abuse: compassionate redirect; no cute teaching-only answer.
-- Medical / legal / halacha: clear boundary + encouragement to seek qualified help; optional educational teaching may still appear after the boundary.
-
-When adding keywords to teachings, avoid terms that would pull crisis language into ordinary theme matching.
-
-## How to add a teaching
-
-1. Verify the source in a reliable edition or standard reference.
-2. Write a paraphrase (not a copyrighted translation dump).
-3. Add keywords that real users would type.
-4. Run `npm run test` and confirm matching still behaves well for presets.
-5. Note the addition in `CURSOR-HANDOFF.md` if it changes product behavior.
+- Medical / legal / halacha: clear boundary + encouragement to seek qualified help.

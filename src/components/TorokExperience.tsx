@@ -1,7 +1,6 @@
 "use client";
 
 import { AboutPanel } from "@/components/AboutPanel";
-import { PromptCards } from "@/components/PromptCards";
 import { ResponseCard } from "@/components/ResponseCard";
 import { TorokCharacter } from "@/components/TorokCharacter";
 import {
@@ -10,9 +9,23 @@ import {
   type CharacterState,
   type WisdomResponse,
 } from "@/lib/wisdom";
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type FormEvent,
+} from "react";
 
-const PRESETS = [
+type ViewState =
+  | "welcome"
+  | "listening"
+  | "thinking"
+  | "answer"
+  | "sensitive"
+  | "error";
+
+const ALL_PRESETS = [
   "How should I handle a difficult conversation?",
   "I made a mistake. How can I repair things?",
   "Share a teaching about patience.",
@@ -27,32 +40,95 @@ const THINKING_LINES = [
   "Gathering a gentle lens…",
 ];
 
+function rotatePresets(seed: number): string[] {
+  const offset = seed % ALL_PRESETS.length;
+  return [...ALL_PRESETS.slice(offset), ...ALL_PRESETS.slice(0, offset)];
+}
+
 export function TorokExperience() {
   const [situation, setSituation] = useState("");
   const [response, setResponse] = useState<WisdomResponse | null>(null);
-  const [characterState, setCharacterState] = useState<CharacterState>("idle");
-  const [loading, setLoading] = useState(false);
+  const [view, setView] = useState<ViewState>("welcome");
+  const [characterState, setCharacterState] =
+    useState<CharacterState>("idle");
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [thinkingLine, setThinkingLine] = useState(THINKING_LINES[0]);
+  const [showMoreIdeas, setShowMoreIdeas] = useState(false);
+  const [altIndex, setAltIndex] = useState(0);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const responseRef = useRef<HTMLDivElement>(null);
+  const answerRef = useRef<HTMLDivElement>(null);
+
+  const daySeed = useMemo(() => {
+    const d = new Date();
+    return d.getFullYear() * 1000 + d.getMonth() * 40 + d.getDate();
+  }, []);
+
+  const presets = useMemo(() => rotatePresets(daySeed), [daySeed]);
+  const visibleChips = showMoreIdeas ? presets : presets.slice(0, 3);
+  const warmth = Math.min(1, situation.trim().length / 80);
 
   useEffect(() => {
-    if (!loading) return;
+    if (view !== "thinking") return;
     let i = 0;
     const id = window.setInterval(() => {
       i = (i + 1) % THINKING_LINES.length;
       setThinkingLine(THINKING_LINES[i]);
     }, 900);
     return () => window.clearInterval(id);
-  }, [loading]);
+  }, [view]);
+
+  // Shareable lens URL without storing private user text
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const lens = params.get("lens");
+    if (!lens) return;
+
+    let cancelled = false;
+    (async () => {
+      setView("thinking");
+      setCharacterState("thinking");
+      try {
+        const res = await fetch("/api/wisdom", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ teachingId: lens }),
+        });
+        if (!res.ok) throw new Error("missing");
+        const data = (await res.json()) as WisdomResponse;
+        if (cancelled) return;
+        setCharacterState(data.mode === "safety" ? "sensitive" : "revealing");
+        setResponse(data);
+        setView(data.mode === "safety" ? "sensitive" : "answer");
+        window.setTimeout(() => {
+          if (data.mode !== "safety") setCharacterState("success");
+        }, 700);
+      } catch {
+        if (!cancelled) {
+          setView("welcome");
+          setCharacterState("idle");
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   async function requestWisdom(text: string) {
     const trimmed = text.trim();
+    if (!trimmed) {
+      setError("Share a thought first — even a few words.");
+      setView("error");
+      setCharacterState("idle");
+      return;
+    }
+
     setError(null);
     setCopied(false);
-    setLoading(true);
+    setAltIndex(0);
+    setView("thinking");
     setCharacterState("thinking");
     setResponse(null);
 
@@ -63,23 +139,51 @@ export function TorokExperience() {
         body: JSON.stringify({ situation: trimmed }),
       });
 
-      if (!res.ok) {
-        throw new Error("Torok could not gather a teaching just now.");
-      }
+      if (!res.ok) throw new Error("request failed");
 
       const data = (await res.json()) as WisdomResponse;
-      setCharacterState("answering");
-      setResponse(data);
-      window.setTimeout(() => setCharacterState("idle"), 1200);
-      window.setTimeout(() => {
-        responseRef.current?.focus();
-      }, 50);
+      await revealAnswer(data);
+
+      if (data.teaching?.id) {
+        const url = new URL(window.location.href);
+        url.searchParams.set("lens", data.teaching.id);
+        window.history.replaceState({}, "", url.toString());
+      }
     } catch {
       setError("Something went gently wrong. Please try again.");
+      setView("error");
       setCharacterState("idle");
-    } finally {
-      setLoading(false);
     }
+  }
+
+  async function requestByTeachingId(id: string) {
+    setView("thinking");
+    setCharacterState("thinking");
+    try {
+      const res = await fetch("/api/wisdom", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ teachingId: id }),
+      });
+      if (!res.ok) throw new Error("missing");
+      const data = (await res.json()) as WisdomResponse;
+      await revealAnswer(data);
+    } catch {
+      setView("welcome");
+      setCharacterState("idle");
+    }
+  }
+
+  async function revealAnswer(data: WisdomResponse) {
+    setCharacterState(
+      data.mode === "safety" ? "sensitive" : "revealing",
+    );
+    setResponse(data);
+    setView(data.mode === "safety" ? "sensitive" : "answer");
+    window.setTimeout(() => {
+      if (data.mode !== "safety") setCharacterState("success");
+    }, 700);
+    window.setTimeout(() => answerRef.current?.focus(), 60);
   }
 
   function handleSubmit(event: FormEvent) {
@@ -87,9 +191,10 @@ export function TorokExperience() {
     void requestWisdom(situation);
   }
 
-  function handlePreset(prompt: string) {
+  function handleChip(prompt: string) {
     setSituation(prompt);
     setCharacterState("listening");
+    setView("listening");
     void requestWisdom(prompt);
   }
 
@@ -101,6 +206,7 @@ export function TorokExperience() {
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
       setError("Copying wasn’t available in this browser.");
+      setView("error");
     }
   }
 
@@ -108,104 +214,139 @@ export function TorokExperience() {
     setResponse(null);
     setError(null);
     setCopied(false);
-    setCharacterState("listening");
-    textareaRef.current?.focus();
+    setAltIndex(0);
+    setShowMoreIdeas(false);
+    setView(situation.trim() ? "listening" : "welcome");
+    setCharacterState(situation.trim() ? "listening" : "idle");
+    const url = new URL(window.location.href);
+    url.searchParams.delete("lens");
+    window.history.replaceState({}, "", url.pathname);
+    window.setTimeout(() => textareaRef.current?.focus(), 50);
   }
 
+  function handleAnotherLens() {
+    if (!response?.alternateTeachingIds?.length) return;
+    const ids = response.alternateTeachingIds;
+    const next = ids[altIndex % ids.length];
+    setAltIndex((i) => i + 1);
+    void requestByTeachingId(next);
+  }
+
+  const showComposer = view === "welcome" || view === "listening" || view === "error";
+  const showAnswer = view === "answer" || view === "sensitive";
+
   return (
-    <div className="page-shell">
+    <div className="page-shell page-compact">
       <div className="paper-texture" aria-hidden="true" />
 
-      <header className="hero">
-        <div className="hero-copy">
-          <p className="eyebrow">A gentle companion</p>
-          <h1 className="wordmark">Torok</h1>
-          <p className="tagline">Ancient wisdom for the moment you’re in.</p>
-          <p className="lede">
-            Describe what’s happening — a hard conversation, a mistake,
-            gratitude, uncertainty — and Torok will offer a Jewish teaching with
-            one practical reflection.
-          </p>
-        </div>
-        <TorokCharacter state={characterState} className="hero-character" />
+      <header className="toy-header">
+        <h1 className="wordmark wordmark-compact">Torok</h1>
+        <TorokCharacter
+          state={characterState}
+          warmth={warmth}
+          className="toy-character"
+        />
       </header>
 
-      <main className="main-panel">
-        <section className="intro-block" aria-labelledby="try-heading">
-          <h2 id="try-heading" className="section-title">
-            Try a starting place
-          </h2>
-          <PromptCards
-            prompts={PRESETS}
-            onSelect={handlePreset}
-            disabled={loading}
-          />
-        </section>
+      <main className="toy-main">
+        {showComposer ? (
+          <section className="welcome-panel" aria-labelledby="mind-heading">
+            <h2 id="mind-heading" className="prompt-heading">
+              What’s on your mind?
+            </h2>
+            <p className="prompt-support">
+              Share a moment. Torok will offer a Jewish teaching and one
+              practical reflection.
+            </p>
 
-        <section className="compose-block" aria-labelledby="compose-heading">
-          <h2 id="compose-heading" className="section-title">
-            Or share your own situation
-          </h2>
-          <form className="compose-form" onSubmit={handleSubmit}>
-            <label htmlFor="situation" className="sr-only">
-              Describe your situation
-            </label>
-            <textarea
-              id="situation"
-              ref={textareaRef}
-              className="situation-input"
-              rows={4}
-              maxLength={2000}
-              placeholder="What’s unfolding for you right now?"
-              value={situation}
-              disabled={loading}
-              onChange={(e) => {
-                setSituation(e.target.value);
-                setCharacterState(
-                  e.target.value.trim() ? "listening" : "idle",
-                );
-              }}
-              onFocus={() => setCharacterState("listening")}
-            />
-            <div className="compose-meta">
-              <span className="char-count">{situation.length}/2000</span>
-              <button
-                type="submit"
-                className="btn-primary"
-                disabled={loading}
-              >
-                {loading ? "Finding wisdom…" : "Find some wisdom"}
+            <form className="compose-form" onSubmit={handleSubmit}>
+              <label htmlFor="situation" className="sr-only">
+                What’s on your mind?
+              </label>
+              <textarea
+                id="situation"
+                ref={textareaRef}
+                className="situation-input situation-input-lg"
+                rows={3}
+                maxLength={2000}
+                placeholder="A hard conversation, a mistake, gratitude, uncertainty…"
+                value={situation}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setSituation(value);
+                  setError(null);
+                  if (value.trim()) {
+                    setView("listening");
+                    setCharacterState("listening");
+                  } else {
+                    setView("welcome");
+                    setCharacterState("idle");
+                  }
+                }}
+                onFocus={() => {
+                  setCharacterState("listening");
+                  if (situation.trim()) setView("listening");
+                }}
+              />
+              <button type="submit" className="btn-primary btn-lamp">
+                Find a teaching
               </button>
-            </div>
-          </form>
-        </section>
+            </form>
 
-        {loading ? (
+            <div className="chip-block">
+              <p className="chip-label">Not sure where to begin?</p>
+              <div className="chip-row" role="group" aria-label="Suggestions">
+                {visibleChips.map((prompt) => (
+                  <button
+                    key={prompt}
+                    type="button"
+                    className="chip"
+                    onClick={() => handleChip(prompt)}
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </div>
+              {!showMoreIdeas ? (
+                <button
+                  type="button"
+                  className="more-ideas"
+                  onClick={() => setShowMoreIdeas(true)}
+                >
+                  More ideas
+                </button>
+              ) : null}
+            </div>
+
+            {error ? (
+              <p className="error-banner" role="alert">
+                {error}
+              </p>
+            ) : null}
+          </section>
+        ) : null}
+
+        {view === "thinking" ? (
           <div className="thinking-state" role="status" aria-live="polite">
-            <TorokCharacter state="thinking" className="thinking-character" />
-            <p>{thinkingLine}</p>
+            <p className="thinking-line">{thinkingLine}</p>
           </div>
         ) : null}
 
-        {error ? (
-          <p className="error-banner" role="alert">
-            {error}
-          </p>
-        ) : null}
-
-        {response ? (
-          <div ref={responseRef} tabIndex={-1} className="response-focus">
+        {showAnswer && response ? (
+          <div ref={answerRef} tabIndex={-1} className="response-focus">
             <ResponseCard
               response={response}
               onAskAnother={handleAskAnother}
               onCopy={() => void handleCopy()}
+              onAnotherLens={handleAnotherLens}
               copied={copied}
+              hasAnotherLens={Boolean(response.alternateTeachingIds?.length)}
             />
           </div>
         ) : null}
       </main>
 
-      <footer className="site-footer">
+      <footer className="site-footer site-footer-compact">
         <p className="footer-disclaimer">{SHORT_DISCLAIMER}</p>
         <AboutPanel />
       </footer>

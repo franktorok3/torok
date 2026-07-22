@@ -1,19 +1,45 @@
 import { assessSafety, safetyResponseCopy } from "./safety";
-import { fallbackTeaching, selectTeaching } from "./matcher";
-import { SHORT_DISCLAIMER, type WisdomResponse } from "./types";
+import { fallbackTeaching, matchTeachings, selectTeaching } from "./matcher";
+import { getTeachingById } from "./teachings";
+import type { Teaching, TeachingPayload, WisdomResponse } from "./types";
 
 const MAX_INPUT = 2000;
+const ALT_SCORE_FLOOR = 3;
 
-function summarizeHearing(input: string, themeLabel?: string): string {
-  const trimmed = input.trim().replace(/\s+/g, " ");
-  const preview =
-    trimmed.length > 140 ? `${trimmed.slice(0, 137).trim()}…` : trimmed;
+function toPayload(teaching: Teaching): TeachingPayload {
+  return {
+    id: teaching.id,
+    themeLabel: teaching.themeLabel,
+    textKind: teaching.textKind,
+    text: teaching.text,
+    translationAttribution: teaching.translationAttribution,
+    sources: teaching.sources,
+    historicalContext: teaching.historicalContext,
+    modernApplication: teaching.modernApplication,
+    viewpoint: teaching.viewpoint,
+  };
+}
 
-  if (themeLabel) {
-    return `You’re sitting with something that touches ${themeLabel.toLowerCase()}: “${preview}”`;
-  }
+function alternateIds(input: string, primaryId: string): string[] {
+  return matchTeachings(input)
+    .filter((m) => m.teaching.id !== primaryId && m.score >= ALT_SCORE_FLOOR)
+    .slice(0, 2)
+    .map((m) => m.teaching.id);
+}
 
-  return `You’re bringing this moment: “${preview}”`;
+export function composeFromTeaching(
+  teaching: Teaching,
+  options?: { mode?: WisdomResponse["mode"]; acknowledgment?: string; input?: string },
+): WisdomResponse {
+  const input = options?.input ?? "";
+  return {
+    mode: options?.mode ?? "teaching",
+    acknowledgment: options?.acknowledgment ?? teaching.acknowledgment,
+    teaching: toPayload(teaching),
+    tryThisToday: teaching.takeaway,
+    reflectionQuestion: teaching.reflectionQuestion,
+    alternateTeachingIds: input ? alternateIds(input, teaching.id) : undefined,
+  };
 }
 
 export function composeWisdom(rawInput: string): WisdomResponse {
@@ -22,12 +48,9 @@ export function composeWisdom(rawInput: string): WisdomResponse {
   if (!input) {
     return {
       mode: "empty",
-      hearing: "I didn’t catch a situation yet.",
-      forToday:
-        "Share a moment you’re in — even a short phrase — and I’ll offer a Jewish teaching and one practical reflection.",
-      disclaimer: SHORT_DISCLAIMER,
-      engineNote:
-        "Local curated engine · waiting for input (not a generative AI model)",
+      acknowledgment: "I’m ready when you are.",
+      tryThisToday:
+        "Share what’s on your mind — even a short phrase — and I’ll offer a Jewish teaching with one practical reflection.",
     };
   }
 
@@ -41,33 +64,25 @@ export function composeWisdom(rawInput: string): WisdomResponse {
     if (hardStop) {
       return {
         mode: "safety",
-        hearing: copy.hearing,
-        forToday: copy.forToday,
+        acknowledgment: copy.hearing,
+        tryThisToday: copy.forToday,
         reflectionQuestion: copy.reflectionQuestion,
-        disclaimer: SHORT_DISCLAIMER,
-        engineNote: "Safety routing · crisis/abuse pathway",
+        safetyKind: safety.kind,
       };
     }
 
-    // Soft safety: still offer a teaching after clear boundaries
     const match = selectTeaching(clipped);
     const teaching = match?.teaching ?? fallbackTeaching();
 
     return {
       mode: "safety",
-      hearing: copy.hearing,
-      teaching: {
-        paraphrase: teaching.paraphrase,
-        explanation: teaching.explanation,
-        source: teaching.source,
-        themeLabel: teaching.themeLabel,
-      },
-      forToday: `${copy.forToday} Meanwhile, one educational lens: ${teaching.takeaway}`,
+      acknowledgment: copy.hearing,
+      teaching: toPayload(teaching),
+      tryThisToday: `${copy.forToday} Meanwhile, one educational lens: ${teaching.takeaway}`,
       reflectionQuestion:
         copy.reflectionQuestion ?? teaching.reflectionQuestion,
-      disclaimer: SHORT_DISCLAIMER,
-      matchedTheme: teaching.theme,
-      engineNote: `Safety routing · ${safety.kind} + curated teaching`,
+      safetyKind: safety.kind,
+      alternateTeachingIds: alternateIds(clipped, teaching.id),
     };
   }
 
@@ -75,66 +90,53 @@ export function composeWisdom(rawInput: string): WisdomResponse {
 
   if (!match || match.score < 3) {
     const teaching = fallbackTeaching();
-    return {
+    return composeFromTeaching(teaching, {
       mode: "fallback",
-      hearing: summarizeHearing(clipped, teaching.themeLabel),
-      teaching: {
-        paraphrase: teaching.paraphrase,
-        explanation: teaching.explanation,
-        source: teaching.source,
-        themeLabel: teaching.themeLabel,
-      },
-      forToday: teaching.takeaway,
-      reflectionQuestion: teaching.reflectionQuestion,
-      disclaimer: SHORT_DISCLAIMER,
-      matchedTheme: teaching.theme,
-      engineNote:
-        "Local curated engine · gentle fallback match (keyword themes, not generative AI)",
-    };
+      acknowledgment:
+        "I’m not sure I caught the heart of it — here’s a gentle lens for uncertain moments.",
+      input: clipped,
+    });
   }
 
-  const { teaching } = match;
-
-  return {
+  return composeFromTeaching(match.teaching, {
     mode: "teaching",
-    hearing: summarizeHearing(clipped, teaching.themeLabel),
-    teaching: {
-      paraphrase: teaching.paraphrase,
-      explanation: teaching.explanation,
-      source: teaching.source,
-      themeLabel: teaching.themeLabel,
-    },
-    forToday: teaching.takeaway,
-    reflectionQuestion: teaching.reflectionQuestion,
-    disclaimer: SHORT_DISCLAIMER,
-    matchedTheme: teaching.theme,
-    engineNote: `Local curated engine · matched theme “${teaching.themeLabel}” via keywords`,
-  };
+    input: clipped,
+  });
+}
+
+export function composeByTeachingId(id: string): WisdomResponse | null {
+  const teaching = getTeachingById(id);
+  if (!teaching) return null;
+  return composeFromTeaching(teaching, {
+    acknowledgment: "A teaching you can sit with.",
+  });
 }
 
 export function formatResponseForClipboard(response: WisdomResponse): string {
-  const parts = [
-    "Torok",
-    "",
-    `What I’m hearing: ${response.hearing}`,
-  ];
+  const parts = ["Torok", "", response.acknowledgment];
 
   if (response.teaching) {
+    const label =
+      response.teaching.textKind === "quotation" ? "Quotation" : "Paraphrase";
     parts.push(
       "",
-      `A Jewish teaching (${response.teaching.themeLabel}):`,
-      response.teaching.paraphrase,
-      response.teaching.explanation,
-      `Source: ${response.teaching.source}`,
+      "A teaching for this moment",
+      `${label}: ${response.teaching.text}`,
     );
+    if (response.teaching.translationAttribution) {
+      parts.push(`Translation: ${response.teaching.translationAttribution}`);
+    }
+    for (const source of response.teaching.sources) {
+      parts.push(`Source: ${source.canonical}`);
+    }
+    parts.push("", response.teaching.modernApplication);
   }
 
-  parts.push("", `For today: ${response.forToday}`);
+  parts.push("", `Try this today: ${response.tryThisToday}`);
 
   if (response.reflectionQuestion) {
     parts.push("", `A question to carry: ${response.reflectionQuestion}`);
   }
 
-  parts.push("", response.disclaimer);
   return parts.join("\n");
 }
