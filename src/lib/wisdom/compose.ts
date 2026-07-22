@@ -30,8 +30,10 @@ import {
   acknowledgmentFor,
   buildLenses,
   hitToSourcePanel,
+  humanizeConcepts,
   practiceFor,
   reflectionFor,
+  relatedWhyLine,
   synthesisFor,
 } from "./engine-response";
 
@@ -179,7 +181,7 @@ function composeFromRetrieval(clipped: string): WisdomResponse | null {
           lenses,
           synthesis: synthesisFor(primaryConcepts),
           tryThisToday: practiceFor(primaryConcepts),
-          reflectionQuestion: reflectionFor(primaryConcepts),
+          reflectionQuestion: reflectionFor(primaryConcepts, "multi"),
           engine: {
             mode: "multi",
             confidence: confidence.level,
@@ -195,7 +197,7 @@ function composeFromRetrieval(clipped: string): WisdomResponse | null {
       ref: h.record.canonicalRef,
       hebrew: h.record.originalText,
       english: h.record.englishText ?? "",
-      whyRelevant: `Why this source: This passage relates to ${primaryConcepts[0] ?? "your question"}.`,
+      whyRelevant: relatedWhyLine(primaryConcepts),
       sefariaUrl: h.record.sefariaUrl,
       englishVersionTitle: h.record.versionTitle ?? "Translation",
       englishLicense: h.record.license,
@@ -232,7 +234,7 @@ function composeFromRetrieval(clipped: string): WisdomResponse | null {
         sourcePanel: panel,
       },
       tryThisToday: practiceFor(primaryConcepts),
-      reflectionQuestion: reflectionFor(primaryConcepts),
+      reflectionQuestion: reflectionFor(primaryConcepts, "single"),
       torahPassages: related.length ? related : undefined,
       engine: {
         mode: "single",
@@ -256,11 +258,11 @@ function singleLensInterpretation(
   english: string | undefined,
   concepts: string[],
 ): string {
-  const focus = concepts.slice(0, 2).join(" and ") || "this moment";
-  if (english && english.length < 180) {
-    return `One way to carry this teaching is to let it shape how you meet ${focus} today — as learning and reflection, not as a ruling.`;
+  const focus = humanizeConcepts(concepts, 2);
+  if (english && english.length < 220) {
+    return `One way to carry this teaching is to let it gently shape how you meet ${focus} today.`;
   }
-  return `This source offers a classical lens on ${focus}. Sit with it, then choose one concrete response that fits your situation — Torok offers learning, not rabbinic authority.`;
+  return `Sit with this source as a companion for ${focus}, then choose one concrete response that fits your situation.`;
 }
 
 export function composeWisdom(rawInput: string): WisdomResponse {

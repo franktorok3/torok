@@ -94,15 +94,15 @@ function scoreVerse(
 
 function whyRelevant(matched: string[], theme?: string): string {
   if (theme && matched.length) {
-    return `Why this source: This passage connects ${theme} with ${matched[0]}.`;
+    return `A companion passage linking ${theme} with ${matched[0]}.`;
   }
   if (theme) {
-    return `Why this source: This passage relates to themes of ${theme}.`;
+    return `A companion passage for sitting with ${theme}.`;
   }
   if (matched.length) {
-    return `Why this source: This passage connects with ${matched[0]}.`;
+    return `A companion passage touching on ${matched[0]}.`;
   }
-  return "Why this source: A related Torah passage for further study.";
+  return "A companion passage for further study.";
 }
 
 function diversify(hits: Array<TorahSearchHit & { chapterKey: string }>): TorahSearchHit[] {

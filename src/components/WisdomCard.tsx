@@ -86,7 +86,6 @@ export function WisdomCard({
         <section className="wisdom-section wisdom-lens" aria-labelledby="carry-it">
           <h3 id="carry-it">One way to carry it</h3>
           <p className="lens-text">{teaching.text}</p>
-          <p className="lens-note">An accessible lens for learning — not a ruling.</p>
         </section>
       ) : null}
 
@@ -208,7 +207,8 @@ function PrimarySourcePanel({ panel }: { panel: SourcePanel }) {
           ) : null}
           <p>
             <strong>How Torok applies it.</strong> Torok offers one accessible
-            reading for everyday life — not a ruling or personal advice.
+            reading for everyday life. It is learning and reflection — not a
+            rabbinic ruling or personal advice.
           </p>
           {panel.englishVersionTitle || panel.originalEdition ? (
             <p>
