@@ -154,7 +154,7 @@ function PrimarySourcePanel({ panel }: { panel: SourcePanel }) {
       : english;
 
   return (
-    <aside className="primary-source" aria-label="Classical source">
+    <aside className="primary-source" aria-label="Jewish text">
       {original ? (
         <blockquote className="source-hebrew" lang={lang} dir="rtl">
           {shownOriginal}
@@ -163,9 +163,11 @@ function PrimarySourcePanel({ panel }: { panel: SourcePanel }) {
 
       {english ? (
         <div className="source-english-block" lang="en" dir="ltr">
-          {panel.englishKind === "paraphrase" ? (
-            <p className="source-english-label">Paraphrase</p>
-          ) : null}
+          <p className="source-english-label">
+            {panel.englishKind === "paraphrase"
+              ? "Torok paraphrase"
+              : englishEditionLabel(panel)}
+          </p>
           <blockquote className="source-english">{shownEnglish}</blockquote>
         </div>
       ) : null}
@@ -195,7 +197,7 @@ function PrimarySourcePanel({ panel }: { panel: SourcePanel }) {
       {learnMoreOpen ? (
         <div className="learn-more-panel">
           <p>
-            <strong>What this is.</strong> {categoryBlurb(panel.category)}
+            <strong>What this is.</strong> {categoryBlurb(panel.category, panel.citationLabel)}
           </p>
           <p>
             <strong>Where it appears.</strong> {panel.citationLabel}.
@@ -229,7 +231,7 @@ function PrimarySourcePanel({ panel }: { panel: SourcePanel }) {
               target="_blank"
               rel="noreferrer"
             >
-              View source
+              View this text
             </a>
           ) : null}
         </div>
@@ -238,18 +240,50 @@ function PrimarySourcePanel({ panel }: { panel: SourcePanel }) {
   );
 }
 
-function categoryBlurb(category: SourcePanel["category"]): string {
+function englishEditionLabel(panel: SourcePanel): string {
+  const raw = panel.englishVersionTitle?.trim() || "";
+  const short = shortenEdition(raw);
+  const license = panel.englishLicense?.trim();
+  if (short && license) return `English · ${short} (${license})`;
+  if (short) return `English · ${short}`;
+  return "English translation";
+}
+
+function shortenEdition(title: string): string {
+  if (!title) return "";
+  if (/1917/i.test(title) && /JPS|Holy Scriptures/i.test(title)) return "JPS 1917";
+  if (/1985/i.test(title) && /JPS|Tanakh/i.test(title)) return "JPS Tanakh 1985";
+  if (/Kulp/i.test(title)) return "Mishnah (Kulp)";
+  if (title.length > 42) return `${title.slice(0, 39).trim()}…`;
+  return title;
+}
+
+function categoryBlurb(
+  category: SourcePanel["category"],
+  citation?: string,
+): string {
+  const named = citation?.replace(/\s+\d+.*$/, "").trim();
   switch (category) {
     case "torah":
-      return "A passage from the Five Books of Moses (Torah).";
+      return named
+        ? `A Torah passage from ${named} (the Five Books of Moses).`
+        : "A passage from the Five Books of Moses (Torah).";
     case "tanakh":
-      return "A passage from the Hebrew Bible beyond the Five Books (Tanakh).";
+      return named
+        ? `A passage from ${named} in the Hebrew Bible (Tanakh).`
+        : "A passage from the Hebrew Bible beyond the Five Books (Tanakh).";
     case "rabbinic":
-      return "A classical rabbinic teaching (for example Mishnah, Talmud, or Midrash).";
+      return named
+        ? `A classical rabbinic teaching from ${named}.`
+        : "A classical rabbinic teaching (for example Mishnah, Talmud, or Midrash).";
     case "later":
-      return "A later rabbinic or ethical source in the Jewish tradition.";
+      return named
+        ? `A later Jewish ethical or rabbinic text from ${named}.`
+        : "A later rabbinic or ethical source in the Jewish tradition.";
     default:
-      return "A classical Jewish source.";
+      return named
+        ? `A classical Jewish text from ${named}.`
+        : "A classical Jewish text.";
   }
 }
 
@@ -269,7 +303,7 @@ function RelatedTorahSources({ passages }: { passages: TorahPassage[] }) {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        Related source
+        Related text
       </button>
       {open ? (
         <div className="related-torah-body">
@@ -289,7 +323,7 @@ function RelatedTorahSources({ passages }: { passages: TorahPassage[] }) {
             target="_blank"
             rel="noreferrer"
           >
-            View source
+            View this text
           </a>
           {hasMore ? (
             <button

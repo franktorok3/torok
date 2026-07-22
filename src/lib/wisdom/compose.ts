@@ -214,7 +214,7 @@ function composeFromRetrieval(clipped: string): WisdomResponse | null {
         theme: "learning",
         themeLabel: lensThemeLabel(primaryConcepts),
         textKind: "paraphrase",
-        text: singleLensInterpretation(top.record.englishText, primaryConcepts),
+        text: singleLensInterpretation(top.record, primaryConcepts),
         sources: [
           {
             canonical: top.record.canonicalRef,
@@ -227,10 +227,7 @@ function composeFromRetrieval(clipped: string): WisdomResponse | null {
           },
         ],
         historicalContext: `${top.record.sourceTitle} (${top.record.sourceCategory})`,
-        modernApplication: singleLensInterpretation(
-          top.record.englishText,
-          primaryConcepts,
-        ),
+        modernApplication: singleLensInterpretation(top.record, primaryConcepts),
         sourcePanel: panel,
       },
       tryThisToday: practiceFor(primaryConcepts),
@@ -254,15 +251,35 @@ function lensThemeLabel(concepts: string[]): string {
   return c.charAt(0).toUpperCase() + c.slice(1).replace(/-/g, " ");
 }
 
+/** Name the Jewish work plainly — never a generic “source.” */
+function nameJewishText(record: {
+  sourceTitle: string;
+  sourceCategory: string;
+}): string {
+  const title = record.sourceTitle.trim();
+  if (/^Pirkei Avot$/i.test(title)) return "this teaching from Pirkei Avot";
+  if (/Mesillat Yesharim/i.test(title)) return "this teaching from Mesillat Yesharim";
+  if (record.sourceCategory === "mishnah") {
+    return `this mishnah from ${title.replace(/^Mishnah\s+/i, "")}`;
+  }
+  if (record.sourceCategory === "ethics") return `this teaching from ${title}`;
+  if (record.sourceCategory === "torah") return `this Torah passage from ${title}`;
+  if (record.sourceCategory === "prophets") return `this prophetic passage from ${title}`;
+  if (record.sourceCategory === "writings") return `this passage from ${title}`;
+  return `this passage from ${title}`;
+}
+
 function singleLensInterpretation(
-  english: string | undefined,
+  record: { sourceTitle: string; sourceCategory: string; englishText?: string | null },
   concepts: string[],
 ): string {
   const focus = humanizeConcepts(concepts, 2);
+  const named = nameJewishText(record);
+  const english = record.englishText ?? undefined;
   if (english && english.length < 220) {
-    return `One way to carry this teaching is to let it gently shape how you meet ${focus} today.`;
+    return `One way to carry ${named} is to let it gently shape how you meet ${focus} today.`;
   }
-  return `Sit with this source as a companion for ${focus}, then choose one concrete response that fits your situation.`;
+  return `Sit with ${named} as a companion for ${focus}, then choose one concrete response that fits your situation.`;
 }
 
 export function composeWisdom(rawInput: string): WisdomResponse {

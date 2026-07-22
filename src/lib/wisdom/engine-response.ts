@@ -39,23 +39,6 @@ export function humanizeConcepts(concepts: string[], limit = 2): string {
   return `${labels[0]} and ${labels[1]}`;
 }
 
-function familyPhrase(cat: LibraryCategory): string {
-  switch (cat) {
-    case "torah":
-      return "From the Torah";
-    case "prophets":
-      return "From the Prophets";
-    case "writings":
-      return "From the Writings";
-    case "mishnah":
-      return "From rabbinic teaching";
-    case "ethics":
-      return "From classical mussar";
-    default:
-      return "From Jewish tradition";
-  }
-}
-
 function lensTitle(record: SourceRecord, concepts: string[]): string {
   const cat = record.sourceCategory;
   if (cat === "writings" && /Ecclesiastes/i.test(record.sourceTitle)) {
@@ -90,7 +73,19 @@ function lensTitle(record: SourceRecord, concepts: string[]): string {
 
 function explanationFor(record: SourceRecord, concepts: string[]): string {
   const focus = humanizeConcepts(concepts, 2);
-  return `${familyPhrase(record.sourceCategory)}, this passage opens a window onto ${focus}.`;
+  const from =
+    record.sourceCategory === "torah"
+      ? `From the Torah (${record.sourceTitle})`
+      : record.sourceCategory === "prophets"
+        ? `From the Prophets (${record.sourceTitle})`
+        : record.sourceCategory === "writings"
+          ? `From the Writings (${record.sourceTitle})`
+          : record.sourceCategory === "mishnah"
+            ? `From the Mishnah (${record.sourceTitle})`
+            : record.sourceCategory === "ethics"
+              ? `From classical mussar (${record.sourceTitle})`
+              : `From ${record.sourceTitle}`;
+  return `${from}, this text opens a window onto ${focus}.`;
 }
 
 export function hitToSourcePanel(hit: RetrievalHit): SourcePanel {
@@ -146,9 +141,9 @@ export function buildLenses(
 export function synthesisFor(concepts: string[]): string {
   const focus = humanizeConcepts(concepts, 3);
   if (focus === "this moment") {
-    return "Jewish tradition rarely answers a question like this with only one voice. Held together, these sources invite study rather than a single official claim.";
+    return "Jewish tradition rarely answers a question like this with only one voice. Held together, these texts invite study rather than a single official claim.";
   }
-  return `Held together, these sources suggest that ${focus} can be approached from more than one classical angle — each worth sitting with on its own terms.`;
+  return `Held together, these texts suggest that ${focus} can be approached from more than one classical angle — each worth sitting with on its own terms.`;
 }
 
 export function practiceFor(concepts: string[]): string {
