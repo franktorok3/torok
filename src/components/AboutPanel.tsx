@@ -31,14 +31,22 @@ export function AboutPanel() {
             one practical reflection.
           </p>
           <p>
-            Responses come from a curated local library of classical sources —
-            carefully quoted or paraphrased and cited. Torok is not a generative
-            AI chatbot by default, not a rabbi, not a posek, and not a therapist.
+            Torok can search the complete Five Books of Moses and a growing
+            curated collection of classical teachings. Search coverage does not
+            mean every result has been interpreted or reviewed. Torok offers one
+            possible lens for learning, not a religious ruling.
           </p>
           <p>
-            Jewish tradition contains many voices. Each teaching is one useful
-            lens, not the only Jewish position. Modern applications are labeled
-            as applications, not as the literal wording of classical sources.
+            Distinctions matter: <strong>Torah</strong> here means Genesis
+            through Deuteronomy; <strong>Tanakh</strong> also includes the
+            Prophets and Writings; rabbinic literature and later commentary are
+            a further layer. Torok’s first corpus covers the complete Torah plus
+            selected classical sources.
+          </p>
+          <p>
+            English Torah quotations use a public-domain edition imported from
+            Sefaria. Powered by Sefaria — Sefaria did not develop or endorse
+            Torok.
           </p>
           <p>
             For questions of Jewish law or personal religious practice, speak
@@ -46,8 +54,9 @@ export function AboutPanel() {
             concerns, seek qualified professional or emergency help.
           </p>
           <p>
-            Content is awaiting review by a qualified rabbi or Jewish educator
-            and should not be treated as editorially certified.
+            Editorial content is awaiting review by a qualified rabbi or Jewish
+            educator and should not be treated as editorially certified. Draft
+            entries are marked as drafts.
           </p>
           <p>
             Torok offers Jewish learning and reflection, not rabbinic rulings,

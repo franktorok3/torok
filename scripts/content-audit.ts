@@ -1,4 +1,6 @@
 import { auditTeachingsLibrary } from "../src/lib/wisdom/audit";
+import { TEACHINGS } from "../src/lib/wisdom/teachings";
+import { getTorahManifest } from "../src/lib/torah";
 
 const { flags, libraryReviewStatus } = auditTeachingsLibrary();
 
@@ -8,19 +10,23 @@ const byCode = flags.reduce<Record<string, number>>((acc, flag) => {
 }, {});
 
 console.log("Torok content audit");
+console.log(`Editorial teachings: ${TEACHINGS.length}`);
 console.log(`Library review status: ${libraryReviewStatus}`);
+try {
+  const manifest = getTorahManifest();
+  console.log(
+    `Torah corpus: ${manifest.totals.books} books, ${manifest.totals.chapters} chapters, ${manifest.totals.verses} verses`,
+  );
+  console.log(
+    `English: ${manifest.englishVersionTitle} (${manifest.englishLicense})`,
+  );
+} catch (err) {
+  console.log(`Torah corpus: unavailable (${String(err)})`);
+}
 console.log(`Total flags: ${flags.length}`);
 console.log("Counts by code:");
 for (const [code, count] of Object.entries(byCode).sort()) {
   console.log(`  ${code}: ${count}`);
-}
-
-const sample = flags.filter((f) => f.teachingId).slice(0, 8);
-if (sample.length) {
-  console.log("\nSample teaching flags:");
-  for (const flag of sample) {
-    console.log(`  [${flag.code}] ${flag.teachingId}: ${flag.message}`);
-  }
 }
 
 console.log(

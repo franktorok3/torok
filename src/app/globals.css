@@ -454,8 +454,68 @@ a {
   margin: 0 0 0.65rem;
 }
 
-.about-body p:last-child {
-  margin-bottom: 0;
+.torah-explore {
+  border-top: 1px solid var(--stroke);
+  padding-top: 0.75rem;
+}
+
+.torah-explore-toggle,
+.sefaria-link,
+.explore-another {
+  font: inherit;
+}
+
+.torah-explore-toggle {
+  border: none;
+  background: transparent;
+  color: var(--accent);
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 1.02rem;
+}
+
+.torah-explore-body {
+  margin-top: 0.7rem;
+  padding: 0.85rem 0.9rem;
+  border-radius: 0.9rem;
+  border: 1px solid rgba(184, 146, 62, 0.28);
+  background: rgba(255, 248, 236, 0.9);
+}
+
+.torah-note,
+.torah-boundary {
+  margin: 0 0 0.65rem;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.source-says-label {
+  margin: 0 0 0.35rem;
+  font-weight: 600;
+  color: var(--ink);
+  font-size: 0.9rem;
+}
+
+.sefaria-link {
+  display: inline-block;
+  margin-top: 0.55rem;
+  color: var(--focus);
+}
+
+.explore-another {
+  display: inline-block;
+  margin-top: 0.45rem;
+  margin-left: 0.75rem;
+}
+
+.powered-by {
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
 }
 
 /* Character */

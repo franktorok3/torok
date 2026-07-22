@@ -1,13 +1,13 @@
 import type { Teaching } from "./types";
+import { DRAFT_TEACHINGS } from "./teachings-drafts";
 
 /**
  * Curated teachings for Torok's free local response engine.
  *
  * Library status: awaiting-educator-review
- * Do not mark entries educator-reviewed until a qualified rabbi or
- * Jewish educator has actually reviewed them.
+ * Draft entries from teachings-drafts.ts are explicitly marked draft.
  */
-export const TEACHINGS: Teaching[] = [
+export const CORE_TEACHINGS: Teaching[] = [
   {
     id: "patience-avot-4-1",
     theme: "patience",
@@ -751,6 +751,8 @@ export const TEACHINGS: Teaching[] = [
     reviewStatus: "awaiting-educator-review",
   },
 ];
+
+export const TEACHINGS: Teaching[] = [...CORE_TEACHINGS, ...DRAFT_TEACHINGS];
 
 export function getTeachingById(id: string): Teaching | undefined {
   return TEACHINGS.find((t) => t.id === id);

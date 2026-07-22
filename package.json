@@ -11,6 +11,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "audit:content": "npx --yes tsx scripts/content-audit.ts",
+    "import:torah": "npx --yes tsx scripts/import-torah.ts",
     "check": "npm run lint && npm run typecheck && npm run test && npm run build"
   },
   "dependencies": {

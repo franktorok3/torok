@@ -1,6 +1,6 @@
 "use client";
 
-import type { WisdomResponse } from "@/lib/wisdom";
+import type { WisdomResponse } from "@/lib/wisdom/types";
 import { useState } from "react";
 
 interface ResponseCardProps {
@@ -107,6 +107,13 @@ export function ResponseCard({
         </section>
       ) : null}
 
+      {response.torahPassages?.length || response.torahExploreNote ? (
+        <TorahExplore
+          passages={response.torahPassages}
+          note={response.torahExploreNote}
+        />
+      ) : null}
+
       <div className="answer-actions">
         <button type="button" className="btn-secondary" onClick={onAskAnother}>
           Ask something else
@@ -121,5 +128,75 @@ export function ResponseCard({
         ) : null}
       </div>
     </article>
+  );
+}
+
+function TorahExplore({
+  passages,
+  note,
+}: {
+  passages?: WisdomResponse["torahPassages"];
+  note?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const [index, setIndex] = useState(0);
+  const passage = passages?.[index];
+
+  return (
+    <section className="torah-explore">
+      <button
+        type="button"
+        className="torah-explore-toggle"
+        aria-expanded={open}
+        onClick={() => setOpen((v) => !v)}
+      >
+        Explore this in Torah
+      </button>
+      {open ? (
+        <div className="torah-explore-body">
+          {note ? <p className="torah-note">{note}</p> : null}
+          {passage ? (
+            <div className="torah-passage">
+              <p className="source-says-label">The source says</p>
+              <p className="teaching-text">
+                <span className="text-kind">Quotation:</span>{" "}
+                <q>{passage.english}</q>
+              </p>
+              <p className="source-line">
+                <span className="source-label">Citation:</span> {passage.ref}
+              </p>
+              <p className="translation-note">
+                {passage.englishVersionTitle} · {passage.englishLicense}
+              </p>
+              <p className="modern-app">{passage.whyRelevant}</p>
+              <p className="torah-boundary">
+                One possible application belongs to Torok’s curated teaching
+                above — not to treating this verse as personal ruling or
+                advice.
+              </p>
+              <a
+                className="sefaria-link"
+                href={passage.sefariaUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Read in context on Sefaria
+              </a>
+              {(passages?.length ?? 0) > 1 ? (
+                <button
+                  type="button"
+                  className="btn-ghost explore-another"
+                  onClick={() =>
+                    setIndex((i) => ((i + 1) % (passages?.length ?? 1)))
+                  }
+                >
+                  Explore another source
+                </button>
+              ) : null}
+            </div>
+          ) : null}
+        </div>
+      ) : null}
+    </section>
   );
 }

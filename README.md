@@ -10,7 +10,12 @@ Torok is a warm, charming Torah-wisdom companion for everyday situations. Descri
 
 Torok works immediately with **no API key** and **no environment variables**.
 
-Responses come from a curated local library of classical Jewish teachings. The engine classifies themes with keyword matching and composes a warm, structured reflection. It does **not** pretend to be a generative AI model.
+Responses come from:
+
+1. A curated editorial teaching library
+2. A local packaged corpus of the complete Five Books of Moses (JPS 1917 + public-domain Hebrew)
+
+Search is hybrid keyword/theme retrieval — not a claim that Torok understands the whole Torah. See [`CONTENT-SOURCES.md`](./CONTENT-SOURCES.md).
 
 Shareable links use `?lens=<teaching-id>` only — they never store private user text.
 
@@ -19,8 +24,9 @@ Shareable links use `?lens=<teaching-id>` only — they never store private user
 | Command | Purpose |
 | --- | --- |
 | `npm run dev` | Local development server |
-| `npm run test` | Wisdom engine + safety + audit tests |
-| `npm run audit:content` | Development-only content integrity audit |
+| `npm run test` | Wisdom engine + Torah corpus + safety tests |
+| `npm run audit:content` | Editorial + Torah integrity audit |
+| `npm run import:torah` | Rebuild Torah corpus from Sefaria |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | TypeScript |
 | `npm run build` | Production build |

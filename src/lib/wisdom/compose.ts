@@ -1,7 +1,15 @@
 import { assessSafety, safetyResponseCopy } from "./safety";
 import { fallbackTeaching, matchTeachings, selectTeaching } from "./matcher";
 import { getTeachingById } from "./teachings";
-import type { Teaching, TeachingPayload, WisdomResponse } from "./types";
+import type {
+  Teaching,
+  TeachingPayload,
+  TorahPassage,
+  WisdomResponse,
+} from "./types";
+import { corpusIsAvailable, searchTorah } from "@/lib/torah";
+
+export { formatResponseForClipboard } from "./clipboard";
 
 const MAX_INPUT = 2000;
 const ALT_SCORE_FLOOR = 3;
@@ -27,12 +35,60 @@ function alternateIds(input: string, primaryId: string): string[] {
     .map((m) => m.teaching.id);
 }
 
+function attachTorahPassages(
+  input: string,
+  theme?: string,
+): Pick<WisdomResponse, "torahPassages" | "torahExploreNote"> {
+  if (!corpusIsAvailable()) {
+    return {
+      torahExploreNote:
+        "Torah corpus is not loaded in this environment. Editorial teachings remain available.",
+    };
+  }
+
+  try {
+    const hits = searchTorah(input, { theme });
+    if (!hits.length) {
+      return {
+        torahExploreNote:
+          "Torok did not find a strong additional Torah-passage match above its relevance threshold. The curated teaching above remains the primary lens.",
+      };
+    }
+
+    const torahPassages: TorahPassage[] = hits.map((hit) => ({
+      ref: hit.ref,
+      english: hit.english,
+      whyRelevant: hit.whyRelevant,
+      sefariaUrl: hit.sefariaUrl,
+      englishVersionTitle: hit.englishVersionTitle,
+      englishLicense: hit.englishLicense,
+      textKind: "quotation" as const,
+    }));
+
+    return {
+      torahPassages,
+      torahExploreNote:
+        "These passages come from a local index of the Five Books of Moses. Retrieval matches themes and related language — not a claim that Torok understands the whole Torah.",
+    };
+  } catch {
+    return {
+      torahExploreNote:
+        "Torah exploration is temporarily unavailable. Editorial teachings remain available.",
+    };
+  }
+}
+
 export function composeFromTeaching(
   teaching: Teaching,
-  options?: { mode?: WisdomResponse["mode"]; acknowledgment?: string; input?: string },
+  options?: {
+    mode?: WisdomResponse["mode"];
+    acknowledgment?: string;
+    input?: string;
+    includeTorah?: boolean;
+  },
 ): WisdomResponse {
   const input = options?.input ?? "";
-  return {
+  const base: WisdomResponse = {
     mode: options?.mode ?? "teaching",
     acknowledgment: options?.acknowledgment ?? teaching.acknowledgment,
     teaching: toPayload(teaching),
@@ -40,6 +96,12 @@ export function composeFromTeaching(
     reflectionQuestion: teaching.reflectionQuestion,
     alternateTeachingIds: input ? alternateIds(input, teaching.id) : undefined,
   };
+
+  if (options?.includeTorah !== false && input) {
+    Object.assign(base, attachTorahPassages(input, teaching.theme));
+  }
+
+  return base;
 }
 
 export function composeWisdom(rawInput: string): WisdomResponse {
@@ -62,6 +124,7 @@ export function composeWisdom(rawInput: string): WisdomResponse {
     const hardStop = safety.kind === "crisis" || safety.kind === "abuse";
 
     if (hardStop) {
+      // Sensitive-topic routing overrides ordinary Torah retrieval
       return {
         mode: "safety",
         acknowledgment: copy.hearing,
@@ -83,6 +146,7 @@ export function composeWisdom(rawInput: string): WisdomResponse {
         copy.reflectionQuestion ?? teaching.reflectionQuestion,
       safetyKind: safety.kind,
       alternateTeachingIds: alternateIds(clipped, teaching.id),
+      // Soft safety: still no exploratory retrieval that could feel like advice
     };
   }
 
@@ -109,34 +173,6 @@ export function composeByTeachingId(id: string): WisdomResponse | null {
   if (!teaching) return null;
   return composeFromTeaching(teaching, {
     acknowledgment: "A teaching you can sit with.",
+    includeTorah: false,
   });
-}
-
-export function formatResponseForClipboard(response: WisdomResponse): string {
-  const parts = ["Torok", "", response.acknowledgment];
-
-  if (response.teaching) {
-    const label =
-      response.teaching.textKind === "quotation" ? "Quotation" : "Paraphrase";
-    parts.push(
-      "",
-      "A teaching for this moment",
-      `${label}: ${response.teaching.text}`,
-    );
-    if (response.teaching.translationAttribution) {
-      parts.push(`Translation: ${response.teaching.translationAttribution}`);
-    }
-    for (const source of response.teaching.sources) {
-      parts.push(`Source: ${source.canonical}`);
-    }
-    parts.push("", response.teaching.modernApplication);
-  }
-
-  parts.push("", `Try this today: ${response.tryThisToday}`);
-
-  if (response.reflectionQuestion) {
-    parts.push("", `A question to carry: ${response.reflectionQuestion}`);
-  }
-
-  return parts.join("\n");
 }

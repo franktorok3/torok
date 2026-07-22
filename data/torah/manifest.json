@@ -1,0 +1,71 @@
+{
+  "coverage": "complete-torah",
+  "definition": "Genesis through Deuteronomy (Five Books of Moses), every chapter and verse available from the selected Sefaria versions.",
+  "notClaimed": [
+    "Tanakh (Prophets and Writings)",
+    "Rabbinic literature completeness",
+    "Editorial interpretation of every verse"
+  ],
+  "importedAt": "2026-07-22T16:50:42.378Z",
+  "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+  "englishLicense": "Public Domain",
+  "englishVersionSource": "http://opensiddur.org/2010/08/%D7%AA%D7%A0%D7%B4%D7%9A-the-holy-scriptures-a-new-translation-jps-1917/",
+  "hebrewVersionTitle": "Tanach with Nikkud",
+  "hebrewLicense": "Public Domain",
+  "endpoints": {
+    "versions": "https://www.sefaria.org/api/texts/versions/{book}",
+    "textsV3": "https://www.sefaria.org/api/v3/texts/{book}.{chapter}?version={language}|{versionTitle}"
+  },
+  "books": [
+    {
+      "book": "Genesis",
+      "chapters": 50,
+      "verses": 1533,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "book": "Exodus",
+      "chapters": 40,
+      "verses": 1210,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "book": "Leviticus",
+      "chapters": 27,
+      "verses": 859,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "book": "Numbers",
+      "chapters": 36,
+      "verses": 1288,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "book": "Deuteronomy",
+      "chapters": 34,
+      "verses": 956,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    }
+  ],
+  "totals": {
+    "books": 5,
+    "chapters": 187,
+    "verses": 5846
+  }
+}

@@ -3,12 +3,12 @@
 import { AboutPanel } from "@/components/AboutPanel";
 import { ResponseCard } from "@/components/ResponseCard";
 import { TorokCharacter } from "@/components/TorokCharacter";
+import { formatResponseForClipboard } from "@/lib/wisdom/clipboard";
 import {
-  formatResponseForClipboard,
   SHORT_DISCLAIMER,
   type CharacterState,
   type WisdomResponse,
-} from "@/lib/wisdom";
+} from "@/lib/wisdom/types";
 import {
   useEffect,
   useMemo,
@@ -348,6 +348,10 @@ export function TorokExperience() {
 
       <footer className="site-footer site-footer-compact">
         <p className="footer-disclaimer">{SHORT_DISCLAIMER}</p>
+        <p className="powered-by">
+          Torah text courtesy of public-domain editions via Sefaria. Powered by
+          Sefaria — Sefaria did not develop or endorse Torok.
+        </p>
         <AboutPanel />
       </footer>
     </div>

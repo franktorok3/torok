@@ -12,7 +12,17 @@ export type Theme =
   | "uncertainty"
   | "learning"
   | "generosity"
-  | "technology";
+  | "technology"
+  | "forgiveness"
+  | "anger"
+  | "humility"
+  | "hospitality"
+  | "family"
+  | "work"
+  | "hope"
+  | "truth"
+  | "joy"
+  | "stewardship";
 
 export type CharacterState =
   | "idle"
@@ -75,6 +85,19 @@ export interface WisdomResponse {
   /** Other strong matches for “Another lens” */
   alternateTeachingIds?: string[];
   safetyKind?: string;
+  /** Up to three Torah passages from the local corpus (not for hard safety) */
+  torahPassages?: TorahPassage[];
+  torahExploreNote?: string;
+}
+
+export interface TorahPassage {
+  ref: string;
+  english: string;
+  whyRelevant: string;
+  sefariaUrl: string;
+  englishVersionTitle: string;
+  englishLicense: string;
+  textKind: "quotation";
 }
 
 export interface MatchResult {

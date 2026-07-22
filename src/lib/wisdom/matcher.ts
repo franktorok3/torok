@@ -33,6 +33,16 @@ const THEME_HINTS: Record<Theme, string[]> = {
   learning: ["learn", "study", "teach", "wisdom", "grow"],
   generosity: ["generous", "give", "charity", "tzedakah", "donate", "share"],
   technology: ["technology", "ai", "digital", "internet", "algorithm", "tech"],
+  forgiveness: ["forgive", "forgiveness", "pardon", "mercy"],
+  anger: ["anger", "angry", "wrath", "furious", "rage"],
+  humility: ["humble", "humility", "ego", "pride"],
+  hospitality: ["hospitality", "guest", "welcome", "stranger", "sojourner"],
+  family: ["family", "parent", "child", "sibling", "household"],
+  work: ["work", "job", "labor", "wage", "hire"],
+  hope: ["hope", "hopeful", "despair", "future"],
+  truth: ["truth", "honest", "lie", "false"],
+  joy: ["joy", "rejoice", "glad", "happy", "delight"],
+  stewardship: ["earth", "land", "environment", "animal", "creation"],
 };
 
 export function tokenize(input: string): string[] {
