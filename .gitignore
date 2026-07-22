@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Sefaria import cache (resumable downloads; not needed at runtime)
+/data/library/cache/

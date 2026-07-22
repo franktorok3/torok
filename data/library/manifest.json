@@ -1,0 +1,633 @@
+{
+  "importedAt": "2026-07-22T20:51:32.778Z",
+  "totals": {
+    "collections": 62,
+    "records": 25581
+  },
+  "collections": [
+    {
+      "slug": "genesis",
+      "title": "Genesis",
+      "category": "torah",
+      "units": 1533,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "exodus",
+      "title": "Exodus",
+      "category": "torah",
+      "units": 1210,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "leviticus",
+      "title": "Leviticus",
+      "category": "torah",
+      "units": 859,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "numbers",
+      "title": "Numbers",
+      "category": "torah",
+      "units": 1288,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "deuteronomy",
+      "title": "Deuteronomy",
+      "category": "torah",
+      "units": 956,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "joshua",
+      "title": "Joshua",
+      "category": "prophets",
+      "units": 658,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "judges",
+      "title": "Judges",
+      "category": "prophets",
+      "units": 618,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "i-samuel",
+      "title": "I Samuel",
+      "category": "prophets",
+      "units": 811,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "ii-samuel",
+      "title": "II Samuel",
+      "category": "prophets",
+      "units": 695,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "i-kings",
+      "title": "I Kings",
+      "category": "prophets",
+      "units": 817,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "ii-kings",
+      "title": "II Kings",
+      "category": "prophets",
+      "units": 719,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "isaiah",
+      "title": "Isaiah",
+      "category": "prophets",
+      "units": 1291,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "jeremiah",
+      "title": "Jeremiah",
+      "category": "prophets",
+      "units": 1364,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "ezekiel",
+      "title": "Ezekiel",
+      "category": "prophets",
+      "units": 1273,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "hosea",
+      "title": "Hosea",
+      "category": "prophets",
+      "units": 197,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "joel",
+      "title": "Joel",
+      "category": "prophets",
+      "units": 73,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "amos",
+      "title": "Amos",
+      "category": "prophets",
+      "units": 146,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "obadiah",
+      "title": "Obadiah",
+      "category": "prophets",
+      "units": 21,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "jonah",
+      "title": "Jonah",
+      "category": "prophets",
+      "units": 48,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "micah",
+      "title": "Micah",
+      "category": "prophets",
+      "units": 105,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "nahum",
+      "title": "Nahum",
+      "category": "prophets",
+      "units": 47,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "habakkuk",
+      "title": "Habakkuk",
+      "category": "prophets",
+      "units": 56,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "zephaniah",
+      "title": "Zephaniah",
+      "category": "prophets",
+      "units": 53,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "haggai",
+      "title": "Haggai",
+      "category": "prophets",
+      "units": 38,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "zechariah",
+      "title": "Zechariah",
+      "category": "prophets",
+      "units": 211,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "malachi",
+      "title": "Malachi",
+      "category": "prophets",
+      "units": 55,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "psalms",
+      "title": "Psalms",
+      "category": "writings",
+      "units": 2527,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "proverbs",
+      "title": "Proverbs",
+      "category": "writings",
+      "units": 915,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "job",
+      "title": "Job",
+      "category": "writings",
+      "units": 1070,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "song-of-songs",
+      "title": "Song of Songs",
+      "category": "writings",
+      "units": 117,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "ruth",
+      "title": "Ruth",
+      "category": "writings",
+      "units": 85,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "lamentations",
+      "title": "Lamentations",
+      "category": "writings",
+      "units": 154,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "ecclesiastes",
+      "title": "Ecclesiastes",
+      "category": "writings",
+      "units": 222,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "esther",
+      "title": "Esther",
+      "category": "writings",
+      "units": 167,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "daniel",
+      "title": "Daniel",
+      "category": "writings",
+      "units": 357,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "ezra",
+      "title": "Ezra",
+      "category": "writings",
+      "units": 280,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "nehemiah",
+      "title": "Nehemiah",
+      "category": "writings",
+      "units": 405,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "i-chronicles",
+      "title": "I Chronicles",
+      "category": "writings",
+      "units": 943,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "ii-chronicles",
+      "title": "II Chronicles",
+      "category": "writings",
+      "units": 822,
+      "englishVersionTitle": "The Holy Scriptures: A New Translation (JPS 1917)",
+      "englishLicense": "Public Domain",
+      "hebrewVersionTitle": "Tanach with Nikkud",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "pirkei-avot",
+      "title": "Pirkei Avot",
+      "category": "mishnah",
+      "units": 108,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mesillat-yesharim",
+      "title": "Mesillat Yesharim",
+      "category": "ethics",
+      "units": 872,
+      "englishVersionTitle": "Path of the Just. Trans. Rabbi Yosef Sebag",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Sefaria Vocalized Edition",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-berakhot",
+      "title": "Mishnah Berakhot",
+      "category": "mishnah",
+      "units": 57,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-peah",
+      "title": "Mishnah Peah",
+      "category": "mishnah",
+      "units": 69,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-shabbat",
+      "title": "Mishnah Shabbat",
+      "category": "mishnah",
+      "units": 139,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-yoma",
+      "title": "Mishnah Yoma",
+      "category": "mishnah",
+      "units": 61,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-rosh-hashanah",
+      "title": "Mishnah Rosh Hashanah",
+      "category": "mishnah",
+      "units": 35,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-taanit",
+      "title": "Mishnah Taanit",
+      "category": "mishnah",
+      "units": 34,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-megillah",
+      "title": "Mishnah Megillah",
+      "category": "mishnah",
+      "units": 33,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-ketubot",
+      "title": "Mishnah Ketubot",
+      "category": "mishnah",
+      "units": 111,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-nedarim",
+      "title": "Mishnah Nedarim",
+      "category": "mishnah",
+      "units": 90,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-sotah",
+      "title": "Mishnah Sotah",
+      "category": "mishnah",
+      "units": 67,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-gittin",
+      "title": "Mishnah Gittin",
+      "category": "mishnah",
+      "units": 75,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-kiddushin",
+      "title": "Mishnah Kiddushin",
+      "category": "mishnah",
+      "units": 47,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-bava-kamma",
+      "title": "Mishnah Bava Kamma",
+      "category": "mishnah",
+      "units": 79,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-bava-metzia",
+      "title": "Mishnah Bava Metzia",
+      "category": "mishnah",
+      "units": 101,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-bava-batra",
+      "title": "Mishnah Bava Batra",
+      "category": "mishnah",
+      "units": 86,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-sanhedrin",
+      "title": "Mishnah Sanhedrin",
+      "category": "mishnah",
+      "units": 71,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-makkot",
+      "title": "Mishnah Makkot",
+      "category": "mishnah",
+      "units": 34,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-shevuot",
+      "title": "Mishnah Shevuot",
+      "category": "mishnah",
+      "units": 62,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-eduyot",
+      "title": "Mishnah Eduyot",
+      "category": "mishnah",
+      "units": 74,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-avodah-zarah",
+      "title": "Mishnah Avodah Zarah",
+      "category": "mishnah",
+      "units": 50,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    },
+    {
+      "slug": "mishnah-horayot",
+      "title": "Mishnah Horayot",
+      "category": "mishnah",
+      "units": 20,
+      "englishVersionTitle": "Mishnah Yomit by Dr. Joshua Kulp",
+      "englishLicense": "CC-BY",
+      "hebrewVersionTitle": "Torat Emet 357",
+      "hebrewLicense": "Public Domain"
+    }
+  ],
+  "licenses": [
+    "CC-BY",
+    "Public Domain"
+  ]
+}

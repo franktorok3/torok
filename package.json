@@ -10,8 +10,16 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "audit:content": "npx --yes tsx scripts/content-audit.ts",
-    "import:torah": "npx --yes tsx scripts/import-torah.ts",
+    "audit:content": "tsx scripts/content-audit.ts",
+    "import:torah": "tsx scripts/import-torah.ts",
+    "import:library": "tsx scripts/import-library.ts",
+    "audit:library": "tsx scripts/audit-library.ts",
+    "enrich:originals": "tsx scripts/enrich-curated-originals.ts",
+    "enrich:topics": "tsx scripts/enrich-topics.ts",
+    "build:search-index": "tsx scripts/build-search-index.ts",
+    "generate:benchmarks": "tsx scripts/generate-benchmarks.ts",
+    "benchmark:retrieval": "tsx scripts/benchmark-retrieval.ts",
+    "benchmark:gold": "tsx scripts/benchmark-gold.ts",
     "check": "npm run lint && npm run typecheck && npm run test && npm run build"
   },
   "dependencies": {
@@ -28,6 +36,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.11",
     "tailwindcss": "^4",
+    "tsx": "^4.23.1",
     "typescript": "^5",
     "vitest": "^4.1.10"
   }

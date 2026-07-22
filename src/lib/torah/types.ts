@@ -33,12 +33,15 @@ export interface TorahSearchHit {
   book: TorahBook;
   chapter: number;
   verse: number;
+  hebrew: string | null;
   english: string;
   sefariaUrl: string;
   score: number;
   whyRelevant: string;
   englishVersionTitle: string;
   englishLicense: string;
+  hebrewVersionTitle: string | null;
+  hebrewLicense: string | null;
 }
 
 export interface TorahCorpusManifest {

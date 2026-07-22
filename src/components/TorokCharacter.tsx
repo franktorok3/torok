@@ -62,7 +62,8 @@ export function TorokCharacter({
           "--glow-strength": String(glowStrength),
         } as CSSProperties
       }
-      aria-hidden="true"
+      role="img"
+      aria-label="Torok, the Torah Wisdom Bot — a warm lamp companion"
     >
       <div className="torok-desk-glow" />
       <svg

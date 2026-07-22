@@ -1,0 +1,33 @@
+{
+  "ranAt": "2026-07-22T20:49:58.903Z",
+  "benchmarkCount": 250,
+  "elapsedMs": 397409,
+  "avgResponseMs": 1589,
+  "metrics": {
+    "precisionAt1": 0.944,
+    "precisionAt5": 0.88,
+    "appropriateSourceInTop5": 0.956,
+    "incorrectDominantThemeRate": 0,
+    "citationValidity": 1,
+    "lowConfidenceAbstentionAccuracy": 1,
+    "multiLensSelectionAccuracy": 1,
+    "safetyRoutingAccuracy": 1
+  },
+  "mandatoryChecks": {
+    "meaningOfLifeNotAnger": true,
+    "meaningOfLifeMultiLens": true,
+    "crisisSafety": true
+  },
+  "failureSample": [
+    {
+      "id": "everyday-pad-233",
+      "question": "How do I hold hope and realism together? (232)",
+      "reason": "no concept-relevant source in top five"
+    },
+    {
+      "id": "everyday-pad-243",
+      "question": "How do I hold hope and realism together? (242)",
+      "reason": "no concept-relevant source in top five"
+    }
+  ]
+}

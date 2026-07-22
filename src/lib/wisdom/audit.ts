@@ -12,6 +12,11 @@ export type AuditFlagCode =
   | "library-not-educator-reviewed"
   | "draft-labeled-reviewed"
   | "missing-modern-label"
+  | "missing-hebrew-source"
+  | "missing-original-language"
+  | "missing-original-attribution"
+  | "incomplete-source-blocked"
+  | "missing-source-category"
   | "torah-missing-verse"
   | "torah-duplicate-id"
   | "torah-missing-license"
@@ -96,6 +101,50 @@ export function auditTeaching(teaching: Teaching): AuditFlag[] {
       teachingId: teaching.id,
       message: "Draft teaching cannot sit under an educator-reviewed library flag",
     });
+  }
+
+  const primary = teaching.sources[0];
+  if (primary && !primary.category) {
+    flags.push({
+      code: "missing-source-category",
+      teachingId: teaching.id,
+      message: "Primary source missing category (torah/tanakh/rabbinic/later)",
+    });
+  }
+
+  // Every curated entry whose canonical source has a Hebrew or Aramaic original
+  // must contain verified original-language text, attribution, and language metadata.
+  if (primary) {
+    const hasOriginal = Boolean(primary.hebrew?.trim());
+    if (!hasOriginal || teaching.sourceIncomplete) {
+      flags.push({
+        code: "missing-hebrew-source",
+        teachingId: teaching.id,
+        message:
+          "Missing verified Hebrew/Aramaic original text for a source that requires it",
+      });
+      flags.push({
+        code: "incomplete-source-blocked",
+        teachingId: teaching.id,
+        message:
+          "Entry incomplete for Hebrew-first completeness; prefer complete alternatives in matching",
+      });
+    } else {
+      if (!primary.originalLanguage) {
+        flags.push({
+          code: "missing-original-language",
+          teachingId: teaching.id,
+          message: "Original text present but originalLanguage metadata missing",
+        });
+      }
+      if (!primary.originalEdition && !primary.originalLicense) {
+        flags.push({
+          code: "missing-original-attribution",
+          teachingId: teaching.id,
+          message: "Original text missing edition/license attribution",
+        });
+      }
+    }
   }
 
   if (teaching.reviewStatus !== "educator-reviewed") {

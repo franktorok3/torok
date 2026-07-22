@@ -50,6 +50,7 @@ describe("Torah corpus", () => {
     expect(hit).not.toBeNull();
     expect(hit!.ref).toBe("Genesis 1:1");
     expect(hit!.english.toLowerCase()).toContain("beginning");
+    expect(hit!.hebrew).toBeTruthy();
   });
 
   it("returns relevant passages for everyday coworker conflict language", () => {
@@ -75,13 +76,19 @@ describe("Torah corpus", () => {
 });
 
 describe("compose with Torah exploration", () => {
-  it("attaches Torah passages for ordinary teaching responses", () => {
+  it("attaches related sources for ordinary wisdom responses", () => {
     const response = composeWisdom("Share a teaching about patience.");
-    expect(response.mode).toBe("teaching");
-    expect(response.torahPassages?.length ?? 0).toBeGreaterThan(0);
-    expect(response.torahPassages?.[0].englishLicense.toLowerCase()).toBe(
-      "public domain",
-    );
+    expect(["teaching", "multi", "fallback"]).toContain(response.mode);
+    if (response.mode === "teaching") {
+      expect(response.torahPassages?.length ?? 0).toBeGreaterThan(0);
+      expect(response.torahPassages?.[0].englishLicense.toLowerCase()).toMatch(
+        /public domain|cc-by/,
+      );
+    } else if (response.mode === "multi") {
+      expect((response.lenses?.length ?? 0) >= 2).toBe(true);
+    } else {
+      expect(response.teaching?.sourcePanel || response.tryThisToday).toBeTruthy();
+    }
   });
 
   it("does not attach Torah exploration for crisis routing", () => {

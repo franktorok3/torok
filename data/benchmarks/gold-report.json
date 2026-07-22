@@ -1,0 +1,54 @@
+{
+  "ranAt": "2026-07-22T20:51:26.702Z",
+  "count": 52,
+  "modeAccuracy": 1,
+  "topFamilyAccuracy": 0.981,
+  "clusterInTop5Accuracy": 0.808,
+  "severeReligiousContextErrors": 0,
+  "failures": [
+    {
+      "id": "gold-010",
+      "reason": "no acceptable cluster in top five"
+    },
+    {
+      "id": "gold-012",
+      "reason": "no acceptable cluster in top five"
+    },
+    {
+      "id": "gold-015",
+      "reason": "no acceptable cluster in top five"
+    },
+    {
+      "id": "gold-021",
+      "reason": "no acceptable cluster in top five"
+    },
+    {
+      "id": "gold-022",
+      "reason": "no acceptable cluster in top five"
+    },
+    {
+      "id": "gold-027",
+      "reason": "no acceptable cluster in top five"
+    },
+    {
+      "id": "gold-028",
+      "reason": "no acceptable cluster in top five"
+    },
+    {
+      "id": "gold-032",
+      "reason": "no acceptable cluster in top five"
+    },
+    {
+      "id": "gold-044",
+      "reason": "no acceptable cluster in top five"
+    },
+    {
+      "id": "gold-048",
+      "reason": "family mishnah not in torah,writings,ethics"
+    },
+    {
+      "id": "gold-052",
+      "reason": "no acceptable cluster in top five"
+    }
+  ]
+}

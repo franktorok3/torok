@@ -93,13 +93,16 @@ function scoreVerse(
 }
 
 function whyRelevant(matched: string[], theme?: string): string {
-  if (!matched.length) {
-    return theme
-      ? `A Torah passage that may relate to themes of ${theme}.`
-      : "A Torah passage that may relate to your question.";
+  if (theme && matched.length) {
+    return `Why this source: This passage connects ${theme} with ${matched[0]}.`;
   }
-  const top = matched.slice(0, 3).join(", ");
-  return `Retrieved because of resonance with: ${top}. This is a textual match, not a claim that the verse was written about your exact situation.`;
+  if (theme) {
+    return `Why this source: This passage relates to themes of ${theme}.`;
+  }
+  if (matched.length) {
+    return `Why this source: This passage connects with ${matched[0]}.`;
+  }
+  return "Why this source: A related Torah passage for further study.";
 }
 
 function diversify(hits: Array<TorahSearchHit & { chapterKey: string }>): TorahSearchHit[] {
@@ -148,12 +151,15 @@ export function lookupExactRef(input: string): TorahSearchHit | null {
     book: verse.book,
     chapter: verse.chapter,
     verse: verse.verse,
+    hebrew: verse.hebrew,
     english: verse.english,
     sefariaUrl: verse.sefariaUrl,
     score: 1000,
     whyRelevant: "Exact reference lookup.",
     englishVersionTitle: manifest.englishVersionTitle,
     englishLicense: manifest.englishLicense,
+    hebrewVersionTitle: verse.hebrewVersionTitle,
+    hebrewLicense: verse.hebrewLicense,
   };
 }
 
@@ -184,12 +190,15 @@ export function searchTorah(
       book: verse.book,
       chapter: verse.chapter,
       verse: verse.verse,
+      hebrew: verse.hebrew,
       english: verse.english,
       sefariaUrl: verse.sefariaUrl,
       score,
       whyRelevant: whyRelevant(matched.length ? matched : whyHints, options?.theme),
       englishVersionTitle: manifest.englishVersionTitle,
       englishLicense: manifest.englishLicense,
+      hebrewVersionTitle: verse.hebrewVersionTitle,
+      hebrewLicense: verse.hebrewLicense,
       chapterKey: `${verse.book}-${verse.chapter}`,
     });
   }

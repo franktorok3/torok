@@ -2,48 +2,58 @@
 
 ## Status
 
-Torah exploration expansion shipped: complete local Torah corpus (Genesis–Deuteronomy), hybrid retrieval, collapsed “Explore this in Torah” UI, 100 editorial teachings (20 awaiting educator review + 80 drafts), audits/tests, GitHub remote.
+Retrieval-grounded Jewish wisdom engine is the **primary** response path. The ~100 curated teachings remain examples / fallbacks only.
 
-## Production URL
+Torok uses Sefaria’s library and textual connections as its source foundation, with Torok’s own retrieval and response system — **not** a Sefaria chatbot model.
 
-**https://torok.vercel.app**
+## Production
 
+**https://torok.vercel.app**  
 GitHub: https://github.com/franktorok3/torok
 
-## Corpus counts (current)
+## Corpus targets
 
-| Metric | Value |
-| --- | --- |
-| Books | 5 (Genesis–Deuteronomy) |
-| Chapters | 187 |
-| Verses | 5,846 |
-| English | JPS 1917 — Public Domain |
-| Hebrew | Tanach with Nikkud — Public Domain |
-| Editorial teachings | 100 (20 awaiting review, 80 draft) |
+| Metric | Target | Notes |
+| --- | --- | --- |
+| Searchable passages | ≥25,000 | `data/library/shards/` |
+| Topics | ≥2,000 | `npm run enrich:topics` |
+| Source–topic links | ≥50,000 | per-record `topics[]` |
+| Benchmarks | ≥250 | `data/benchmarks/` |
+| Curated cards | 100 | fallback / examples |
 
 ## Important paths
 
 | Path | Role |
 | --- | --- |
-| `data/torah/` | Local packaged corpus + manifest |
-| `scripts/import-torah.ts` | Repeatable Sefaria import |
-| `src/lib/torah/` | Loader + hybrid search (server-side) |
-| `src/lib/wisdom/` | Editorial engine + compose |
-| `CONTENT-SOURCES.md` | Licenses, endpoints, coverage definition |
+| `data/library/` | Local searchable corpus + manifest + topics |
+| `scripts/import-library.ts` | Resumable licensed import |
+| `scripts/enrich-topics.ts` | Topic ontology + tagging |
+| `src/lib/library/` | Retrieve / rerank / verify (server-only) |
+| `src/lib/wisdom/compose.ts` | Safety → retrieval → curated fallback |
+| `src/components/WisdomCard.tsx` | Single + multi-lens UI |
 
 ## Commands
 
 ```bash
 npm install
-npm run import:torah   # refresh corpus from Sefaria (network)
-npm run audit:content
+npm run import:library
+npm run enrich:topics
+npm run build:search-index
+npm run generate:benchmarks
+npm run benchmark:retrieval
 npm run test
 npm run check
 npx vercel --prod
 ```
 
-## Notes
+## Rules
 
-- Runtime needs no Sefaria network calls when `data/torah` is present.
-- Client components import only `@/lib/wisdom/types` and `clipboard` — Torah FS loader stays server-side.
-- Draft teachings must never be labeled educator-reviewed without a real educator review.
+- Client must **not** import library loader / compose / `node:fs` corpus modules
+- Quotations hydrate from verified `SourceRecord`s — never from model memory
+- No-key mode must stay useful
+- Sefaria / LLM failures must not crash the app
+- Do not claim rabbinic authority or Sefaria endorsement of Torok’s answers
+
+## Optional LLM
+
+See `.env.example` (`TOROK_LLM_*`). Free-tier quotas may change. Without a key, deterministic retrieval + templated connective language is used.

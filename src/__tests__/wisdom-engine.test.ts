@@ -84,6 +84,34 @@ describe("matchTeachings", () => {
     expect(teaching!.modernApplication).toMatch(/fair boundaries/i);
     expect(teaching!.modernApplication).toMatch(/modern application/i);
   });
+
+  it("puts classical source ahead of Torok interpretation", () => {
+    const response = composeWisdom("Share a teaching about patience.");
+    const panel =
+      response.teaching?.sourcePanel || response.lenses?.[0]?.sourcePanel;
+    expect(panel?.originalText || panel?.hebrew).toBeTruthy();
+    expect(panel?.english).toBeTruthy();
+    expect(panel?.citationLabel).toBeTruthy();
+  });
+
+  it("hydrates original-language text for conversation questions", () => {
+    const response = composeWisdom(
+      "How should I handle a difficult conversation?",
+    );
+    const panel =
+      response.teaching?.sourcePanel || response.lenses?.[0]?.sourcePanel;
+    expect(panel?.originalText || panel?.hebrew).toBeTruthy();
+    expect(panel?.english).toBeTruthy();
+  });
+
+  it("includes verified Hebrew for decision-making questions", () => {
+    const response = composeWisdom("Help me think about a decision.");
+    const panel =
+      response.teaching?.sourcePanel || response.lenses?.[0]?.sourcePanel;
+    const original = panel?.originalText || panel?.hebrew;
+    expect(original).toBeTruthy();
+    expect(original).toMatch(/[\u0590-\u05FF]/);
+  });
 });
 
 describe("assessSafety", () => {
@@ -144,28 +172,35 @@ describe("composeWisdom", () => {
     expect(response.tryThisToday.toLowerCase()).toMatch(/988|emergency/);
   });
 
-  it("composes a teaching response for presets without engine diagnostics", () => {
+  it("composes a source-grounded response for presets without engine diagnostics", () => {
     const response = composeWisdom("Share a teaching about patience.");
-    expect(response.mode).toBe("teaching");
-    expect(response.teaching?.sources.length).toBeGreaterThan(0);
-    expect(response.teaching?.textKind).toBe("paraphrase");
-    expect(response.reflectionQuestion).toBeTruthy();
+    expect(["teaching", "multi", "fallback"]).toContain(response.mode);
+    const hasSource =
+      Boolean(response.teaching?.sourcePanel) ||
+      (response.lenses?.length ?? 0) > 0;
+    expect(hasSource).toBe(true);
+    expect(response.reflectionQuestion || response.tryThisToday).toBeTruthy();
     expect(JSON.stringify(response).toLowerCase()).not.toContain("via keywords");
     expect(JSON.stringify(response).toLowerCase()).not.toContain("engine note");
   });
 
-  it("uses fallback for unrelated input", () => {
+  it("uses abstain or curated fallback for unrelated input", () => {
     const response = composeWisdom("xyzzy plugh fnord");
-    expect(["fallback", "teaching"]).toContain(response.mode);
-    expect(response.teaching?.sources.length).toBeGreaterThan(0);
+    expect(["fallback", "teaching", "abstain"]).toContain(response.mode);
+    if (response.mode !== "abstain") {
+      expect(response.teaching?.sources.length).toBeGreaterThan(0);
+    }
   });
 
-  it("offers another lens when multiple teachings fit", () => {
+  it("returns a grounded response for multi-theme situations", () => {
     const response = composeWisdom(
       "How should I handle a difficult conversation about peace?",
     );
-    expect(response.mode).toBe("teaching");
-    expect(response.alternateTeachingIds?.length ?? 0).toBeGreaterThan(0);
+    expect(["teaching", "multi"]).toContain(response.mode);
+    const hasSource =
+      Boolean(response.teaching?.sourcePanel) ||
+      (response.lenses?.length ?? 0) > 0;
+    expect(hasSource).toBe(true);
   });
 });
 

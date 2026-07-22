@@ -1,10 +1,16 @@
 "use client";
 
 import { AboutPanel } from "@/components/AboutPanel";
-import { ResponseCard } from "@/components/ResponseCard";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { TorokCharacter } from "@/components/TorokCharacter";
+import { WisdomCard } from "@/components/WisdomCard";
 import { formatResponseForClipboard } from "@/lib/wisdom/clipboard";
+import { validateWisdomResponse } from "@/lib/wisdom/validate-response";
 import {
+  BRAND_DESCRIPTOR,
+  BRAND_NAME,
+  BRAND_TAGLINE,
+  FRIENDLY_ERROR,
   SHORT_DISCLAIMER,
   type CharacterState,
   type WisdomResponse,
@@ -40,6 +46,8 @@ const THINKING_LINES = [
   "Gathering a gentle lens…",
 ];
 
+const REQUEST_TIMEOUT_MS = 15000;
+
 function rotatePresets(seed: number): string[] {
   const offset = seed % ALL_PRESETS.length;
   return [...ALL_PRESETS.slice(offset), ...ALL_PRESETS.slice(0, offset)];
@@ -55,9 +63,13 @@ export function TorokExperience() {
   const [copied, setCopied] = useState(false);
   const [thinkingLine, setThinkingLine] = useState(THINKING_LINES[0]);
   const [showMoreIdeas, setShowMoreIdeas] = useState(false);
-  const [altIndex, setAltIndex] = useState(0);
+  const [submitting, setSubmitting] = useState(false);
+  const [lensQueue, setLensQueue] = useState<string[]>([]);
+  const [usedLenses, setUsedLenses] = useState<string[]>([]);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
+  const requestIdRef = useRef(0);
+  const abortRef = useRef<AbortController | null>(null);
 
   const daySeed = useMemo(() => {
     const d = new Date();
@@ -67,6 +79,8 @@ export function TorokExperience() {
   const presets = useMemo(() => rotatePresets(daySeed), [daySeed]);
   const visibleChips = showMoreIdeas ? presets : presets.slice(0, 3);
   const warmth = Math.min(1, situation.trim().length / 80);
+  const canShare =
+    typeof navigator !== "undefined" && typeof navigator.share === "function";
 
   useEffect(() => {
     if (view !== "thinking") return;
@@ -78,31 +92,25 @@ export function TorokExperience() {
     return () => window.clearInterval(id);
   }, [view]);
 
-  // Shareable lens URL without storing private user text
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const lens = params.get("lens");
     if (!lens) return;
 
     let cancelled = false;
-    (async () => {
+    void (async () => {
       setView("thinking");
       setCharacterState("thinking");
       try {
-        const res = await fetch("/api/wisdom", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ teachingId: lens }),
-        });
-        if (!res.ok) throw new Error("missing");
-        const data = (await res.json()) as WisdomResponse;
-        if (cancelled) return;
-        setCharacterState(data.mode === "safety" ? "sensitive" : "revealing");
-        setResponse(data);
-        setView(data.mode === "safety" ? "sensitive" : "answer");
-        window.setTimeout(() => {
-          if (data.mode !== "safety") setCharacterState("success");
-        }, 700);
+        const data = await fetchWisdom({ teachingId: lens }, 0);
+        if (cancelled || !data) {
+          if (!cancelled) {
+            setView("welcome");
+            setCharacterState("idle");
+          }
+          return;
+        }
+        await revealAnswer(data);
       } catch {
         if (!cancelled) {
           setView("welcome");
@@ -116,6 +124,37 @@ export function TorokExperience() {
     };
   }, []);
 
+  async function fetchWisdom(
+    body: { situation?: string; teachingId?: string },
+    requestId: number,
+  ): Promise<WisdomResponse | null> {
+    abortRef.current?.abort();
+    const controller = new AbortController();
+    abortRef.current = controller;
+    const timer = window.setTimeout(
+      () => controller.abort(),
+      REQUEST_TIMEOUT_MS,
+    );
+
+    try {
+      const res = await fetch("/api/wisdom", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+        signal: controller.signal,
+      });
+      if (requestId !== requestIdRef.current) return null;
+      if (!res.ok) throw new Error("request failed");
+      const json: unknown = await res.json();
+      if (requestId !== requestIdRef.current) return null;
+      const data = validateWisdomResponse(json);
+      if (!data) throw new Error("malformed");
+      return data;
+    } finally {
+      window.clearTimeout(timer);
+    }
+  }
+
   async function requestWisdom(text: string) {
     const trimmed = text.trim();
     if (!trimmed) {
@@ -124,25 +163,26 @@ export function TorokExperience() {
       setCharacterState("idle");
       return;
     }
+    if (submitting) return;
 
+    const requestId = ++requestIdRef.current;
+    setSubmitting(true);
     setError(null);
     setCopied(false);
-    setAltIndex(0);
+    setLensQueue([]);
+    setUsedLenses([]);
     setView("thinking");
     setCharacterState("thinking");
     setResponse(null);
 
     try {
-      const res = await fetch("/api/wisdom", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ situation: trimmed }),
-      });
-
-      if (!res.ok) throw new Error("request failed");
-
-      const data = (await res.json()) as WisdomResponse;
-      await revealAnswer(data);
+      const data = await fetchWisdom({ situation: trimmed }, requestId);
+      if (!data || requestId !== requestIdRef.current) return;
+      const queue = data.alternateTeachingIds ?? [];
+      setLensQueue(queue);
+      const used = data.teaching?.id ? [data.teaching.id] : [];
+      setUsedLenses(used);
+      await revealAnswer({ ...data, alternateTeachingIds: queue });
 
       if (data.teaching?.id) {
         const url = new URL(window.location.href);
@@ -150,34 +190,46 @@ export function TorokExperience() {
         window.history.replaceState({}, "", url.toString());
       }
     } catch {
-      setError("Something went gently wrong. Please try again.");
+      if (requestId !== requestIdRef.current) return;
+      setError(FRIENDLY_ERROR);
       setView("error");
       setCharacterState("idle");
+    } finally {
+      if (requestId === requestIdRef.current) setSubmitting(false);
     }
   }
 
   async function requestByTeachingId(id: string) {
+    if (submitting) return;
+    const requestId = ++requestIdRef.current;
+    setSubmitting(true);
     setView("thinking");
     setCharacterState("thinking");
     try {
-      const res = await fetch("/api/wisdom", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ teachingId: id }),
+      const data = await fetchWisdom({ teachingId: id }, requestId);
+      if (!data || requestId !== requestIdRef.current) return;
+      setUsedLenses((prev) =>
+        prev.includes(id) ? prev : [...prev, id],
+      );
+      await revealAnswer({
+        ...data,
+        alternateTeachingIds: lensQueue,
       });
-      if (!res.ok) throw new Error("missing");
-      const data = (await res.json()) as WisdomResponse;
-      await revealAnswer(data);
+      const url = new URL(window.location.href);
+      url.searchParams.set("lens", id);
+      window.history.replaceState({}, "", url.toString());
     } catch {
-      setView("welcome");
+      if (requestId !== requestIdRef.current) return;
+      setError(FRIENDLY_ERROR);
+      setView("error");
       setCharacterState("idle");
+    } finally {
+      if (requestId === requestIdRef.current) setSubmitting(false);
     }
   }
 
   async function revealAnswer(data: WisdomResponse) {
-    setCharacterState(
-      data.mode === "safety" ? "sensitive" : "revealing",
-    );
+    setCharacterState(data.mode === "safety" ? "sensitive" : "revealing");
     setResponse(data);
     setView(data.mode === "safety" ? "sensitive" : "answer");
     window.setTimeout(() => {
@@ -192,6 +244,7 @@ export function TorokExperience() {
   }
 
   function handleChip(prompt: string) {
+    if (submitting) return;
     setSituation(prompt);
     setCharacterState("listening");
     setView("listening");
@@ -205,16 +258,35 @@ export function TorokExperience() {
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
-      setError("Copying wasn’t available in this browser.");
+      setError(FRIENDLY_ERROR);
       setView("error");
     }
   }
 
+  async function handleShare() {
+    if (!response?.teaching?.id || !navigator.share) return;
+    const url = new URL(window.location.href);
+    url.searchParams.set("lens", response.teaching.id);
+    try {
+      await navigator.share({
+        title: `${BRAND_NAME} — ${BRAND_DESCRIPTOR}`,
+        text: "A Torah teaching for this moment.",
+        url: url.toString(),
+      });
+    } catch {
+      // User cancelled share — ignore
+    }
+  }
+
   function handleAskAnother() {
+    requestIdRef.current += 1;
+    abortRef.current?.abort();
+    setSubmitting(false);
     setResponse(null);
     setError(null);
     setCopied(false);
-    setAltIndex(0);
+    setLensQueue([]);
+    setUsedLenses([]);
     setShowMoreIdeas(false);
     setView(situation.trim() ? "listening" : "welcome");
     setCharacterState(situation.trim() ? "listening" : "idle");
@@ -225,22 +297,33 @@ export function TorokExperience() {
   }
 
   function handleAnotherLens() {
-    if (!response?.alternateTeachingIds?.length) return;
-    const ids = response.alternateTeachingIds;
-    const next = ids[altIndex % ids.length];
-    setAltIndex((i) => i + 1);
+    if (submitting) return;
+    const used = new Set(usedLenses);
+    const ids = lensQueue.filter((id) => !used.has(id));
+    if (!ids.length) {
+      setError("Torok has shared the strongest other lenses for now.");
+      return;
+    }
+    const next = ids[0];
     void requestByTeachingId(next);
   }
 
-  const showComposer = view === "welcome" || view === "listening" || view === "error";
+  const showComposer =
+    view === "welcome" || view === "listening" || view === "error";
   const showAnswer = view === "answer" || view === "sensitive";
+  const usedSet = useMemo(() => new Set(usedLenses), [usedLenses]);
+  const remainingLenses = lensQueue.filter((id) => !usedSet.has(id)).length;
 
   return (
     <div className="page-shell page-compact">
       <div className="paper-texture" aria-hidden="true" />
 
       <header className="toy-header">
-        <h1 className="wordmark wordmark-compact">Torok</h1>
+        <div className="brand-lockup">
+          <h1 className="wordmark wordmark-compact">{BRAND_NAME}</h1>
+          <p className="brand-descriptor">{BRAND_DESCRIPTOR}</p>
+          <p className="brand-tagline">{BRAND_TAGLINE}</p>
+        </div>
         <TorokCharacter
           state={characterState}
           warmth={warmth}
@@ -271,6 +354,7 @@ export function TorokExperience() {
                 maxLength={2000}
                 placeholder="A hard conversation, a mistake, gratitude, uncertainty…"
                 value={situation}
+                disabled={submitting}
                 onChange={(e) => {
                   const value = e.target.value;
                   setSituation(value);
@@ -288,7 +372,11 @@ export function TorokExperience() {
                   if (situation.trim()) setView("listening");
                 }}
               />
-              <button type="submit" className="btn-primary btn-lamp">
+              <button
+                type="submit"
+                className="btn-primary btn-lamp"
+                disabled={submitting}
+              >
                 Find a teaching
               </button>
             </form>
@@ -301,6 +389,7 @@ export function TorokExperience() {
                     key={prompt}
                     type="button"
                     className="chip"
+                    disabled={submitting}
                     onClick={() => handleChip(prompt)}
                   >
                     {prompt}
@@ -334,25 +423,30 @@ export function TorokExperience() {
 
         {showAnswer && response ? (
           <div ref={answerRef} tabIndex={-1} className="response-focus">
-            <ResponseCard
-              response={response}
-              onAskAnother={handleAskAnother}
-              onCopy={() => void handleCopy()}
-              onAnotherLens={handleAnotherLens}
-              copied={copied}
-              hasAnotherLens={Boolean(response.alternateTeachingIds?.length)}
-            />
+            <ErrorBoundary
+              onRetry={handleAskAnother}
+              fallbackTitle="Torok lost the page for a moment."
+            >
+              <WisdomCard
+                response={response}
+                onAskAnother={handleAskAnother}
+                onCopy={() => void handleCopy()}
+                onAnotherLens={handleAnotherLens}
+                onShare={() => void handleShare()}
+                copied={copied}
+                hasAnotherLens={remainingLenses > 0}
+                canShare={canShare && Boolean(response.teaching?.id)}
+              />
+            </ErrorBoundary>
           </div>
         ) : null}
       </main>
 
       <footer className="site-footer site-footer-compact">
         <p className="footer-disclaimer">{SHORT_DISCLAIMER}</p>
-        <p className="powered-by">
-          Torah text courtesy of public-domain editions via Sefaria. Powered by
-          Sefaria — Sefaria did not develop or endorse Torok.
-        </p>
-        <AboutPanel />
+        <AboutPanel
+          triggerLabel="Torah texts from public-domain editions. Sources and limitations."
+        />
       </footer>
     </div>
   );

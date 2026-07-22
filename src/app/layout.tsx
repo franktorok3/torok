@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Source_Sans_3 } from "next/font/google";
+import { Fraunces, Frank_Ruhl_Libre, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -14,15 +14,31 @@ const sourceSans = Source_Sans_3({
   display: "swap",
 });
 
+const frankRuhl = Frank_Ruhl_Libre({
+  variable: "--font-hebrew",
+  subsets: ["hebrew", "latin"],
+  weight: ["400", "500", "600"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Torok — Ancient wisdom for the moment you’re in",
+  metadataBase: new URL("https://torok.vercel.app"),
+  title: "Torok — The Torah Wisdom Bot",
   description:
-    "A warm Torah-wisdom companion for everyday situations. Describe what’s happening and receive a Jewish teaching with one practical reflection.",
+    "Explore Torah wisdom for everyday moments through carefully sourced teachings and practical reflection.",
   applicationName: "Torok",
   openGraph: {
-    title: "Torok",
-    description: "Ancient wisdom for the moment you’re in.",
+    title: "Torok — The Torah Wisdom Bot",
+    description:
+      "Explore Torah wisdom for everyday moments through carefully sourced teachings and practical reflection.",
     type: "website",
+    siteName: "Torok",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Torok — The Torah Wisdom Bot",
+    description:
+      "Explore Torah wisdom for everyday moments through carefully sourced teachings and practical reflection.",
   },
 };
 
@@ -34,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${sourceSans.variable} h-full antialiased`}
+      className={`${fraunces.variable} ${sourceSans.variable} ${frankRuhl.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

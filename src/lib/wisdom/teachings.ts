@@ -1,11 +1,13 @@
 import type { Teaching } from "./types";
 import { DRAFT_TEACHINGS } from "./teachings-drafts";
+import { applyCuratedOriginals } from "./originals";
 
 /**
  * Curated teachings for Torok's free local response engine.
  *
  * Library status: awaiting-educator-review
  * Draft entries from teachings-drafts.ts are explicitly marked draft.
+ * Verified Hebrew/Aramaic originals are merged from data/curated-originals.json.
  */
 export const CORE_TEACHINGS: Teaching[] = [
   {
@@ -15,17 +17,23 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Pirkei Avot 4:1 (Ben Zoma)",
+        citationLabel: "Pirkei Avot 4:1 · Ben Zoma",
         url: "https://www.sefaria.org/Pirkei_Avot.4.1",
+        category: "rabbinic",
+        hebrew: "אֵיזֶהוּ גִבּוֹר? הַכּוֹבֵשׁ אֶת יִצְרוֹ",
+        english: "Who is mighty? One who masters one’s impulse.",
+        englishKind: "quotation",
+        attribution: "Traditional rendering of Pirkei Avot 4:1",
       },
     ],
     textKind: "paraphrase",
-    text: "Ben Zoma teaches that true strength is not domination of others, but mastery of one’s own impulse — the patient work of governing oneself.",
+    text: "Ben Zoma reframes strength as self-command rather than control over another person. One way to carry that teaching today is to pause long enough to choose a measured response instead of reacting from impulse.",
     historicalContext:
       "Pirkei Avot (“Ethics of the Fathers”) collects rabbinic maxims on character. Ben Zoma’s teaching reframes strength as self-mastery.",
     modernApplication:
       "Patience can be a form of courage: waiting, cooling down, and choosing a measured response rather than reacting from impulse.",
     takeaway:
-      "Before you react, give yourself one breath and one clearer intention. Strength may look like restraint.",
+      "Before responding, take one deliberate breath and name the outcome you want your response to serve.",
     reflectionQuestion:
       "What would it look like to meet this moment with strength that is quiet rather than forceful?",
     acknowledgment: "Patience is hard work — especially when something feels urgent.",
@@ -53,11 +61,17 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Maimonides, Mishneh Torah, Hilchot Teshuvah",
+        citationLabel: "Maimonides, Mishneh Torah, Laws of Repentance",
         url: "https://www.sefaria.org/Mishneh_Torah%2C_Repentance",
+        category: "later",
+        english:
+          "Teshuvah includes recognizing the harm, regretting it, seeking to make amends where possible, and changing future behavior.",
+        englishKind: "paraphrase",
+        attribution: "Paraphrase of Maimonides’ framing of repentance",
       },
     ],
     textKind: "paraphrase",
-    text: "Classical Jewish teachings on teshuvah describe repair as more than feeling sorry — it includes recognizing the harm, regretting it, seeking to make amends where possible, and changing future behavior.",
+    text: "Classical Jewish teachings on teshuvah describe repair as more than feeling sorry — it moves from acknowledgment toward amended conduct. A sincere apology names what went wrong, centers the person harmed, and aims toward concrete change.",
     historicalContext:
       "Maimonides (Rambam) systematizes laws of repentance, outlining steps that move from acknowledgment toward amended conduct.",
     modernApplication:
@@ -92,17 +106,20 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Leviticus 19:18",
+        citationLabel: "Leviticus 19:18",
         url: "https://www.sefaria.org/Leviticus.19.18",
+        category: "torah",
       },
       {
         canonical: "Sifra, Kedoshim 4:12",
         url: "https://www.sefaria.org/Sifra%2C_Kedoshim.4.12",
+        category: "rabbinic",
       },
     ],
-    textKind: "quotation",
-    text: "Love your neighbor as yourself",
+    textKind: "paraphrase",
+    text: "Rabbi Akiva later called “love your neighbor as yourself” an all-embracing principle of Torah. One way to carry that teaching in a difficult conversation is to protect the other person’s dignity without abandoning your own — including by setting fair boundaries.",
     translationAttribution:
-      "JPS Tanakh (1985) English rendering of Leviticus 19:18",
+      "JPS 1917 English via local Torah corpus; interpretive lens is Torok’s",
     historicalContext:
       "Leviticus 19:18 appears in the Holiness Code. In Sifra, Kedoshim 4:12, Rabbi Akiva describes “Love your neighbor as yourself” as an all-embracing (or major) principle in Torah — a rabbinic interpretive claim about the verse’s centrality, not additional biblical wording.",
     modernApplication:
@@ -139,11 +156,18 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Pirkei Avot 1:14 (Hillel)",
+        citationLabel: "Pirkei Avot 1:14 · Hillel",
         url: "https://www.sefaria.org/Pirkei_Avot.1.14",
+        category: "rabbinic",
+        hebrew: "אִם אֵין אֲנִי לִי, מִי לִי? וּכְשֶׁאֲנִי לְעַצְמִי, מָה אֲנִי? וְאִם לֹא עַכְשָׁיו, אֵימָתַי?",
+        english:
+          "If I am not for myself, who will be for me? If I am only for myself, what am I? And if not now, when?",
+        englishKind: "quotation",
+        attribution: "Traditional rendering of Pirkei Avot 1:14",
       },
     ],
     textKind: "paraphrase",
-    text: "Hillel asks: If I am not for myself, who will be for me? If I am only for myself, what am I? And if not now, when?",
+    text: "Hillel’s three questions sketch an ethic of responsibility, solidarity, and timely action. Leadership in this lens is less about status than about balancing self-care, care for others, and acting in time.",
     historicalContext:
       "Hillel’s three questions appear in Pirkei Avot as a compact ethic of responsibility, solidarity, and timely action.",
     modernApplication:
@@ -177,11 +201,17 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Joshua 1:9",
+        citationLabel: "Joshua 1:9",
         url: "https://www.sefaria.org/Joshua.1.9",
+        category: "tanakh",
+        english:
+          "Have I not commanded you? Be strong and of good courage; be not affrighted, neither be thou dismayed.",
+        englishKind: "quotation",
+        attribution: "JPS 1917 (public domain)",
       },
     ],
     textKind: "paraphrase",
-    text: "Joshua is told to be strong and courageous, and not to be dismayed — a call to steady heart in the face of uncertainty and large responsibility.",
+    text: "Joshua is told to be strong and courageous at a threshold of large responsibility. Biblical courage here includes continuing forward even when fear is present — not pretending fear is absent.",
     historicalContext:
       "Joshua 1 addresses Joshua at the threshold of leadership after Moses. Courage is paired with reassurance.",
     modernApplication:
@@ -214,7 +244,13 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Modeh Ani (traditional morning liturgy)",
+        citationLabel: "Modeh Ani · morning liturgy",
         url: "https://www.sefaria.org/Siddur_Ashkenaz%2C_Weekday%2C_Shacharit%2C_Preparatory_Prayers%2C_Modeh_Ani",
+        category: "later",
+        hebrew: "מוֹדֶה אֲנִי לְפָנֶיךָ",
+        english: "I give thanks before You…",
+        englishKind: "quotation",
+        attribution: "Opening of the traditional Modeh Ani",
       },
     ],
     textKind: "paraphrase",
@@ -250,7 +286,13 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Pirkei Avot 2:4 (Hillel)",
+        citationLabel: "Pirkei Avot 2:4 · Hillel",
         url: "https://www.sefaria.org/Pirkei_Avot.2.4",
+        category: "rabbinic",
+        hebrew: "אַל תִּפְרוֹשׁ מִן הַצִּבּוּר",
+        english: "Do not separate yourself from the community.",
+        englishKind: "quotation",
+        attribution: "Traditional rendering of Pirkei Avot 2:4",
       },
     ],
     textKind: "paraphrase",
@@ -288,7 +330,9 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Deuteronomy 16:20",
+        citationLabel: "Deuteronomy 16:20",
         url: "https://www.sefaria.org/Deuteronomy.16.20",
+        category: "torah",
       },
     ],
     textKind: "quotation",
@@ -327,7 +371,9 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Exodus 20:8–11",
+        citationLabel: "Exodus 20:8–11",
         url: "https://www.sefaria.org/Exodus.20.8-11",
+        category: "torah",
       },
     ],
     textKind: "paraphrase",
@@ -365,7 +411,9 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Leviticus 19:16",
+        citationLabel: "Leviticus 19:16",
         url: "https://www.sefaria.org/Leviticus.19.16",
+        category: "torah",
       },
     ],
     textKind: "paraphrase",
@@ -404,7 +452,13 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Proverbs 3:5–6",
+        citationLabel: "Proverbs 3:5–6",
         url: "https://www.sefaria.org/Proverbs.3.5-6",
+        category: "tanakh",
+        english:
+          "Trust in the LORD with all thy heart, and lean not upon thine own understanding. In all thy ways acknowledge Him, and He will direct thy paths.",
+        englishKind: "quotation",
+        attribution: "JPS 1917 (public domain)",
       },
     ],
     textKind: "paraphrase",
@@ -444,7 +498,13 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Pirkei Avot 5:22 (Ben Bag Bag)",
+        citationLabel: "Pirkei Avot 5:22 · Ben Bag Bag",
         url: "https://www.sefaria.org/Pirkei_Avot.5.22",
+        category: "rabbinic",
+        hebrew: "הֲפֹךְ בָּהּ וַהֲפֹךְ בָּהּ, דְּכֹלָּא בָהּ",
+        english: "Turn it and turn it again, for everything is in it.",
+        englishKind: "quotation",
+        attribution: "Traditional rendering of Pirkei Avot 5:22",
       },
     ],
     textKind: "paraphrase",
@@ -482,7 +542,9 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Deuteronomy 15:7–8",
+        citationLabel: "Deuteronomy 15:7–8",
         url: "https://www.sefaria.org/Deuteronomy.15.7-8",
+        category: "torah",
       },
     ],
     textKind: "paraphrase",
@@ -520,7 +582,9 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Leviticus 19:14",
+        citationLabel: "Leviticus 19:14",
         url: "https://www.sefaria.org/Leviticus.19.14",
+        category: "torah",
       },
     ],
     textKind: "quotation",
@@ -561,7 +625,13 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Proverbs 14:29",
+        citationLabel: "Proverbs 14:29",
         url: "https://www.sefaria.org/Proverbs.14.29",
+        category: "tanakh",
+        english:
+          "He that is slow to anger is of great understanding; but he that is hasty of spirit exalteth folly.",
+        englishKind: "quotation",
+        attribution: "JPS 1917 (public domain)",
       },
     ],
     textKind: "paraphrase",
@@ -593,7 +663,14 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Pirkei Avot 1:12 (Hillel)",
+        citationLabel: "Pirkei Avot 1:12 · Hillel",
         url: "https://www.sefaria.org/Pirkei_Avot.1.12",
+        category: "rabbinic",
+        hebrew: "הֱוֵי מִתַּלְמִידָיו שֶׁל אַהֲרֹן, אוֹהֵב שָׁלוֹם וְרוֹדֵף שָׁלוֹם",
+        english:
+          "Be of the disciples of Aaron, loving peace and pursuing peace.",
+        englishKind: "quotation",
+        attribution: "Traditional rendering of Pirkei Avot 1:12",
       },
     ],
     textKind: "paraphrase",
@@ -626,7 +703,12 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Proverbs 18:21",
+        citationLabel: "Proverbs 18:21",
         url: "https://www.sefaria.org/Proverbs.18.21",
+        category: "tanakh",
+        english: "Death and life are in the power of the tongue.",
+        englishKind: "quotation",
+        attribution: "JPS 1917 (public domain)",
       },
     ],
     textKind: "paraphrase",
@@ -658,7 +740,13 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Pirkei Avot 1:15 (Shammai)",
+        citationLabel: "Pirkei Avot 1:15 · Shammai",
         url: "https://www.sefaria.org/Pirkei_Avot.1.15",
+        category: "rabbinic",
+        hebrew: "אֱמֹר מְעַט וַעֲשֵׂה הַרְבֵּה",
+        english: "Say little and do much.",
+        englishKind: "quotation",
+        attribution: "Traditional rendering of Pirkei Avot 1:15",
       },
     ],
     textKind: "paraphrase",
@@ -692,7 +780,13 @@ export const CORE_TEACHINGS: Teaching[] = [
       {
         canonical:
           "Maimonides, Mishneh Torah, Hilchot Matnot Aniyim (levels of tzedakah)",
+        citationLabel: "Maimonides · Levels of tzedakah",
         url: "https://www.sefaria.org/Mishneh_Torah%2C_Gifts_to_the_Poor.10",
+        category: "later",
+        english:
+          "The highest forms of giving preserve the recipient’s dignity — especially help that strengthens independence and avoids embarrassment.",
+        englishKind: "paraphrase",
+        attribution: "Paraphrase of Maimonides’ ladder of tzedakah",
       },
     ],
     textKind: "paraphrase",
@@ -724,7 +818,13 @@ export const CORE_TEACHINGS: Teaching[] = [
     sources: [
       {
         canonical: "Babylonian Talmud, Sotah 37a (Nachshon tradition)",
+        citationLabel: "Babylonian Talmud, Sotah 37a · Nachshon tradition",
         url: "https://www.sefaria.org/Sotah.37a",
+        category: "rabbinic",
+        english:
+          "Rabbinic tradition remembers Nachshon stepping into the sea before it split — courage that begins before certainty arrives.",
+        englishKind: "paraphrase",
+        attribution: "Paraphrase of the Nachshon tradition in Sotah 37a",
       },
     ],
     textKind: "paraphrase",
@@ -752,7 +852,10 @@ export const CORE_TEACHINGS: Teaching[] = [
   },
 ];
 
-export const TEACHINGS: Teaching[] = [...CORE_TEACHINGS, ...DRAFT_TEACHINGS];
+export const TEACHINGS: Teaching[] = applyCuratedOriginals([
+  ...CORE_TEACHINGS,
+  ...DRAFT_TEACHINGS,
+]);
 
 export function getTeachingById(id: string): Teaching | undefined {
   return TEACHINGS.find((t) => t.id === id);

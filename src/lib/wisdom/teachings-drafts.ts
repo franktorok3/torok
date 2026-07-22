@@ -4,6 +4,7 @@
  * until a qualified rabbi or Jewish educator reviews them.
  */
 import type { Teaching, Theme } from "./types";
+import { inferSourceCategory } from "./source-category";
 
 type DraftSeed = {
   id: string;
@@ -21,11 +22,19 @@ type DraftSeed = {
 };
 
 function draft(seed: DraftSeed): Teaching {
+  const category = inferSourceCategory(seed.canonical);
   return {
     id: seed.id,
     theme: seed.theme,
     themeLabel: seed.themeLabel,
-    sources: [{ canonical: seed.canonical, url: seed.url }],
+    sources: [
+      {
+        canonical: seed.canonical,
+        citationLabel: seed.canonical,
+        url: seed.url,
+        category,
+      },
+    ],
     textKind: "paraphrase",
     text: seed.text,
     historicalContext: seed.context,

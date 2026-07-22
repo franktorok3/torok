@@ -8,9 +8,17 @@ export {
   composeFromTeaching,
   composeWisdom,
 } from "./compose";
-export { matchTeachings, selectTeaching, tokenize } from "./matcher";
+export {
+  alternateLensIds,
+  matchTeachings,
+  selectTeaching,
+  selectThemePair,
+  tokenize,
+} from "./matcher";
 export { assessSafety } from "./safety";
 export { getTeachingById, TEACHINGS } from "./teachings";
+export { isPublishableTeaching } from "./publishable";
+export { validateWisdomResponse } from "./validate-response";
 export type {
   CharacterState,
   Teaching,
@@ -18,4 +26,11 @@ export type {
   TorahPassage,
   WisdomResponse,
 } from "./types";
-export { LIBRARY_REVIEW_STATUS, SHORT_DISCLAIMER } from "./types";
+export {
+  BRAND_DESCRIPTOR,
+  BRAND_NAME,
+  BRAND_TAGLINE,
+  FRIENDLY_ERROR,
+  LIBRARY_REVIEW_STATUS,
+  SHORT_DISCLAIMER,
+} from "./types";

@@ -1,0 +1,526 @@
+{
+  "version": 1,
+  "description": "Manually reviewed gold set for retrieval quality. Reported separately from the automated 250-question suite.",
+  "items": [
+    {
+      "id": "gold-001",
+      "question": "What is the meaning of life?",
+      "acceptablePrimaryConcepts": ["purpose", "creation", "responsibility", "wisdom"],
+      "acceptableSecondaryConcepts": ["mortality", "service", "joy", "community"],
+      "appropriateSourceFamilies": ["writings", "ethics", "philosophy", "mishnah", "torah"],
+      "acceptableSourceClusters": ["Ecclesiastes", "Pirkei Avot", "Mesillat Yesharim", "Proverbs", "Psalms", "Genesis 1"],
+      "unacceptable": ["Exodus 32 anger narrative", "incidental life mentions without purpose teaching", "narrative violence as advice"],
+      "expectedMode": "multi"
+    },
+    {
+      "id": "gold-002",
+      "question": "Why are we here?",
+      "acceptablePrimaryConcepts": ["purpose", "creation", "responsibility"],
+      "acceptableSecondaryConcepts": ["service", "wisdom"],
+      "appropriateSourceFamilies": ["writings", "ethics", "philosophy", "mishnah", "torah"],
+      "acceptableSourceClusters": ["Ecclesiastes", "Genesis 1", "Mesillat Yesharim", "Pirkei Avot"],
+      "unacceptable": ["anger narratives", "random narrative episodes"],
+      "expectedMode": "multi"
+    },
+    {
+      "id": "gold-003",
+      "question": "I am afraid to speak up when something feels unjust.",
+      "acceptablePrimaryConcepts": ["justice", "courage"],
+      "acceptableSecondaryConcepts": ["speech", "truth", "leadership"],
+      "appropriateSourceFamilies": ["torah", "prophets", "writings", "mishnah"],
+      "acceptableSourceClusters": ["Deuteronomy 16:20", "Deuteronomy 31", "Micah 6:8", "Isaiah 1:17", "Joshua 1:9", "Pirkei Avot"],
+      "unacceptable": ["anger as primary theme", "violence narratives as advice"],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-004",
+      "question": "I am grieving someone I love.",
+      "acceptablePrimaryConcepts": ["grief", "mortality"],
+      "acceptableSecondaryConcepts": ["hope", "compassion", "community"],
+      "appropriateSourceFamilies": ["writings", "prophets", "mishnah"],
+      "acceptableSourceClusters": ["Psalms", "Lamentations", "Isaiah 40", "Job"],
+      "unacceptable": ["death-penalty narrative verses", "Micah battle dirges as pastoral comfort"],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-005",
+      "question": "How do I repair a strained friendship?",
+      "acceptablePrimaryConcepts": ["relationships", "repair", "forgiveness"],
+      "acceptableSecondaryConcepts": ["speech", "love", "kindness"],
+      "appropriateSourceFamilies": ["torah", "writings", "mishnah", "ethics"],
+      "acceptableSourceClusters": ["Leviticus 19:18", "Proverbs", "Ecclesiastes 4", "Pirkei Avot"],
+      "unacceptable": ["property-deposit mishnah without relational teaching"],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-006",
+      "question": "What makes a good leader?",
+      "acceptablePrimaryConcepts": ["leadership", "humility", "responsibility"],
+      "acceptableSecondaryConcepts": ["justice", "courage"],
+      "appropriateSourceFamilies": ["torah", "mishnah", "writings", "prophets"],
+      "acceptableSourceClusters": ["Exodus 18", "Deuteronomy 1", "Pirkei Avot"],
+      "unacceptable": ["war narratives as leadership advice"],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-007",
+      "question": "How do I work with anger without harming others?",
+      "acceptablePrimaryConcepts": ["anger", "patience"],
+      "acceptableSecondaryConcepts": ["speech"],
+      "appropriateSourceFamilies": ["writings", "ethics", "mishnah"],
+      "acceptableSourceClusters": ["Proverbs", "Ecclesiastes 7:9", "Psalms 37", "Pirkei Avot"],
+      "unacceptable": ["Moses breaking tablets as the primary teaching"],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-008",
+      "question": "How do I practice gratitude?",
+      "acceptablePrimaryConcepts": ["gratitude"],
+      "acceptableSecondaryConcepts": ["joy", "prayer"],
+      "appropriateSourceFamilies": ["writings", "torah"],
+      "acceptableSourceClusters": ["Psalms 100", "Psalms 136", "Deuteronomy 8:10"],
+      "unacceptable": ["capital punishment mishnah"],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-009",
+      "question": "How do I live with uncertainty?",
+      "acceptablePrimaryConcepts": ["uncertainty", "trust", "faith"],
+      "acceptableSecondaryConcepts": ["hope", "courage"],
+      "appropriateSourceFamilies": ["writings", "ethics", "torah"],
+      "acceptableSourceClusters": ["Proverbs 3:5", "Psalms 27", "Psalms 37"],
+      "unacceptable": ["narrative battle scenes"],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-010",
+      "question": "What does justice require of ordinary people?",
+      "acceptablePrimaryConcepts": ["justice"],
+      "acceptableSecondaryConcepts": ["courage", "responsibility"],
+      "appropriateSourceFamilies": ["torah", "prophets", "writings"],
+      "acceptableSourceClusters": ["Deuteronomy 16:20", "Micah 6:8", "Amos 5:24", "Isaiah 1:17"],
+      "unacceptable": ["anger narratives"],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-011",
+      "question": "How should I approach honest work?",
+      "acceptablePrimaryConcepts": ["work", "honesty"],
+      "acceptableSecondaryConcepts": ["responsibility", "rest"],
+      "appropriateSourceFamilies": ["torah", "writings", "mishnah", "ethics"],
+      "acceptableSourceClusters": ["Exodus 20:9", "Proverbs", "Deuteronomy 25"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-012",
+      "question": "How do I rest without feeling lazy?",
+      "acceptablePrimaryConcepts": ["rest"],
+      "acceptableSecondaryConcepts": ["work", "joy"],
+      "appropriateSourceFamilies": ["torah", "writings"],
+      "acceptableSourceClusters": ["Exodus 20:8", "Genesis 2:2", "Isaiah 58:13"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-013",
+      "question": "How do I guard my tongue?",
+      "acceptablePrimaryConcepts": ["speech", "gossip"],
+      "acceptableSecondaryConcepts": ["truth"],
+      "appropriateSourceFamilies": ["writings", "mishnah", "torah"],
+      "acceptableSourceClusters": ["Proverbs", "Psalms 34", "Leviticus 19:16", "Pirkei Avot"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-014",
+      "question": "How do I forgive someone who wronged me?",
+      "acceptablePrimaryConcepts": ["forgiveness", "repair"],
+      "acceptableSecondaryConcepts": ["mercy"],
+      "appropriateSourceFamilies": ["torah", "writings", "prophets", "ethics"],
+      "acceptableSourceClusters": ["Exodus 34:6", "Micah 7:18", "Psalms 103"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-015",
+      "question": "How do I find courage to speak up?",
+      "acceptablePrimaryConcepts": ["courage"],
+      "acceptableSecondaryConcepts": ["justice", "fear"],
+      "appropriateSourceFamilies": ["torah", "prophets", "writings"],
+      "acceptableSourceClusters": ["Joshua 1:9", "Deuteronomy 31:6", "Isaiah 41:10"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-016",
+      "question": "How do I honor aging parents?",
+      "acceptablePrimaryConcepts": ["family", "honor"],
+      "acceptableSecondaryConcepts": ["parenting", "relationships"],
+      "appropriateSourceFamilies": ["torah", "writings", "mishnah"],
+      "acceptableSourceClusters": ["Exodus 20:12", "Leviticus 19:32", "Proverbs"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-017",
+      "question": "What does tzedakah ask of me?",
+      "acceptablePrimaryConcepts": ["charity", "generosity"],
+      "acceptableSecondaryConcepts": ["poverty", "justice"],
+      "appropriateSourceFamilies": ["torah", "writings", "mishnah"],
+      "acceptableSourceClusters": ["Deuteronomy 15", "Leviticus 19:9", "Proverbs 19:17", "Mishnah Peah"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-018",
+      "question": "How do I build community where I live?",
+      "acceptablePrimaryConcepts": ["community"],
+      "acceptableSecondaryConcepts": ["hospitality", "responsibility"],
+      "appropriateSourceFamilies": ["mishnah", "torah", "ethics", "writings"],
+      "acceptableSourceClusters": ["Pirkei Avot", "Deuteronomy 10:19"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-019",
+      "question": "How should I use technology more wisely?",
+      "acceptablePrimaryConcepts": ["speech", "responsibility"],
+      "acceptableSecondaryConcepts": ["truth", "rest", "technology"],
+      "appropriateSourceFamilies": ["ethics", "writings", "mishnah"],
+      "acceptableSourceClusters": ["Proverbs", "Ecclesiastes", "Pirkei Avot"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-020",
+      "question": "Why do good people suffer?",
+      "acceptablePrimaryConcepts": ["wisdom", "mortality", "hope"],
+      "acceptableSecondaryConcepts": ["faith", "suffering"],
+      "appropriateSourceFamilies": ["writings", "philosophy", "ethics", "mishnah"],
+      "acceptableSourceClusters": ["Job", "Psalms", "Ecclesiastes", "Lamentations", "Pirkei Avot"],
+      "unacceptable": ["anger narratives as theodicy"],
+      "expectedMode": "multi"
+    },
+    {
+      "id": "gold-021",
+      "question": "Show me Genesis 1:1",
+      "acceptablePrimaryConcepts": ["learning", "creation"],
+      "acceptableSecondaryConcepts": [],
+      "appropriateSourceFamilies": ["torah"],
+      "acceptableSourceClusters": ["Genesis 1:1"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-022",
+      "question": "What does Micah 6:8 say?",
+      "acceptablePrimaryConcepts": ["justice", "humility", "kindness"],
+      "acceptableSecondaryConcepts": [],
+      "appropriateSourceFamilies": ["prophets"],
+      "acceptableSourceClusters": ["Micah 6:8"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-023",
+      "question": "Am I obligated to keep kosher?",
+      "acceptablePrimaryConcepts": ["halacha"],
+      "acceptableSecondaryConcepts": [],
+      "appropriateSourceFamilies": [],
+      "acceptableSourceClusters": [],
+      "unacceptable": ["ordinary exploratory teaching as a ruling"],
+      "expectedMode": "safety"
+    },
+    {
+      "id": "gold-024",
+      "question": "I want to end my life",
+      "acceptablePrimaryConcepts": ["crisis-support"],
+      "acceptableSecondaryConcepts": [],
+      "appropriateSourceFamilies": [],
+      "acceptableSourceClusters": [],
+      "unacceptable": ["ordinary Torah exploration"],
+      "expectedMode": "safety"
+    },
+    {
+      "id": "gold-025",
+      "question": "asdf",
+      "acceptablePrimaryConcepts": [],
+      "acceptableSecondaryConcepts": [],
+      "appropriateSourceFamilies": [],
+      "acceptableSourceClusters": [],
+      "unacceptable": ["confident unrelated advice"],
+      "expectedMode": "abstain"
+    },
+    {
+      "id": "gold-026",
+      "question": "How do I apologize sincerely?",
+      "acceptablePrimaryConcepts": ["apology", "repair"],
+      "acceptableSecondaryConcepts": ["forgiveness", "humility"],
+      "appropriateSourceFamilies": ["torah", "writings", "ethics"],
+      "acceptableSourceClusters": ["Psalms 51", "Leviticus 5", "Hosea 14"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-027",
+      "question": "What does friendship require?",
+      "acceptablePrimaryConcepts": ["relationships", "love"],
+      "acceptableSecondaryConcepts": ["loyalty", "speech"],
+      "appropriateSourceFamilies": ["writings", "torah", "mishnah"],
+      "acceptableSourceClusters": ["Proverbs 17:17", "Proverbs 27:17", "Ecclesiastes 4:9"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-028",
+      "question": "How do leaders stay humble?",
+      "acceptablePrimaryConcepts": ["leadership", "humility"],
+      "acceptableSecondaryConcepts": ["responsibility"],
+      "appropriateSourceFamilies": ["mishnah", "prophets", "torah", "writings"],
+      "acceptableSourceClusters": ["Micah 6:8", "Pirkei Avot 4:1", "Numbers 12:3"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-029",
+      "question": "Where is comfort when someone dies?",
+      "acceptablePrimaryConcepts": ["grief", "hope"],
+      "acceptableSecondaryConcepts": ["compassion"],
+      "appropriateSourceFamilies": ["writings", "prophets"],
+      "acceptableSourceClusters": ["Psalms 23", "Psalms 147:3", "Isaiah 40:1"],
+      "unacceptable": ["execution narratives"],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-030",
+      "question": "How do I set boundaries at work?",
+      "acceptablePrimaryConcepts": ["work", "rest"],
+      "acceptableSecondaryConcepts": ["responsibility"],
+      "appropriateSourceFamilies": ["torah", "writings", "ethics"],
+      "acceptableSourceClusters": ["Exodus 20", "Proverbs"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-031",
+      "question": "How do I give without resentment?",
+      "acceptablePrimaryConcepts": ["charity", "generosity"],
+      "acceptableSecondaryConcepts": ["kindness"],
+      "appropriateSourceFamilies": ["torah", "writings", "mishnah"],
+      "acceptableSourceClusters": ["Deuteronomy 15", "Proverbs"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-032",
+      "question": "How do I include people on the margins?",
+      "acceptablePrimaryConcepts": ["community", "hospitality", "justice"],
+      "acceptableSecondaryConcepts": ["kindness"],
+      "appropriateSourceFamilies": ["torah", "prophets", "mishnah"],
+      "acceptableSourceClusters": ["Deuteronomy 10:19", "Leviticus 19:34", "Isaiah 1:17"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-033",
+      "question": "What does careful speech mean online?",
+      "acceptablePrimaryConcepts": ["speech", "truth"],
+      "acceptableSecondaryConcepts": ["gossip"],
+      "appropriateSourceFamilies": ["writings", "ethics", "mishnah"],
+      "acceptableSourceClusters": ["Proverbs", "Psalms 34", "Pirkei Avot"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-034",
+      "question": "How do I wait without anxiety?",
+      "acceptablePrimaryConcepts": ["uncertainty", "hope", "trust"],
+      "acceptableSecondaryConcepts": ["faith"],
+      "appropriateSourceFamilies": ["writings", "ethics"],
+      "acceptableSourceClusters": ["Psalms 27", "Psalms 37", "Proverbs 3"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-035",
+      "question": "How do I notice blessings again?",
+      "acceptablePrimaryConcepts": ["gratitude", "joy"],
+      "acceptableSecondaryConcepts": ["prayer"],
+      "appropriateSourceFamilies": ["writings", "torah"],
+      "acceptableSourceClusters": ["Psalms", "Deuteronomy 8"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-036",
+      "question": "What renews a tired spirit?",
+      "acceptablePrimaryConcepts": ["rest", "hope"],
+      "acceptableSecondaryConcepts": ["joy"],
+      "appropriateSourceFamilies": ["writings", "torah", "prophets"],
+      "acceptableSourceClusters": ["Psalms", "Isaiah 40", "Exodus 20"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-037",
+      "question": "When should I stay silent?",
+      "acceptablePrimaryConcepts": ["speech"],
+      "acceptableSecondaryConcepts": ["wisdom"],
+      "appropriateSourceFamilies": ["writings", "mishnah"],
+      "acceptableSourceClusters": ["Ecclesiastes 3:7", "Proverbs", "Pirkei Avot 1:17"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-038",
+      "question": "What is moral courage?",
+      "acceptablePrimaryConcepts": ["courage", "justice"],
+      "acceptableSecondaryConcepts": ["truth"],
+      "appropriateSourceFamilies": ["torah", "prophets", "writings"],
+      "acceptableSourceClusters": ["Joshua 1:9", "Micah 6:8", "Deuteronomy 31"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-039",
+      "question": "What is learning with humility?",
+      "acceptablePrimaryConcepts": ["learning", "humility"],
+      "acceptableSecondaryConcepts": ["wisdom"],
+      "appropriateSourceFamilies": ["mishnah", "writings", "ethics"],
+      "acceptableSourceClusters": ["Pirkei Avot", "Proverbs"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-040",
+      "question": "How do I face mortality?",
+      "acceptablePrimaryConcepts": ["mortality", "wisdom"],
+      "acceptableSecondaryConcepts": ["purpose", "hope"],
+      "appropriateSourceFamilies": ["writings", "mishnah", "ethics"],
+      "acceptableSourceClusters": ["Psalms 90", "Ecclesiastes", "Pirkei Avot 4:22"],
+      "unacceptable": ["execution narratives as philosophy"],
+      "expectedMode": "multi"
+    },
+    {
+      "id": "gold-041",
+      "question": "How do I mentor someone younger?",
+      "acceptablePrimaryConcepts": ["leadership", "learning"],
+      "acceptableSecondaryConcepts": ["humility", "responsibility"],
+      "appropriateSourceFamilies": ["mishnah", "writings", "torah"],
+      "acceptableSourceClusters": ["Pirkei Avot", "Proverbs 1", "Deuteronomy 6"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-042",
+      "question": "How do I support someone who is mourning?",
+      "acceptablePrimaryConcepts": ["grief", "compassion"],
+      "acceptableSecondaryConcepts": ["community", "hope"],
+      "appropriateSourceFamilies": ["writings", "prophets", "mishnah"],
+      "acceptableSourceClusters": ["Job 2:13", "Psalms", "Isaiah 40"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-043",
+      "question": "How do I make amends?",
+      "acceptablePrimaryConcepts": ["repair", "apology"],
+      "acceptableSecondaryConcepts": ["forgiveness"],
+      "appropriateSourceFamilies": ["torah", "prophets", "writings", "ethics"],
+      "acceptableSourceClusters": ["Leviticus 5", "Hosea 14", "Ezekiel 18"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-044",
+      "question": "How do I advocate without becoming cruel?",
+      "acceptablePrimaryConcepts": ["justice", "mercy", "speech"],
+      "acceptableSecondaryConcepts": ["compassion"],
+      "appropriateSourceFamilies": ["prophets", "torah", "writings"],
+      "acceptableSourceClusters": ["Micah 6:8", "Proverbs 15:1", "Zechariah 8:16"],
+      "unacceptable": ["vengeance narratives"],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-045",
+      "question": "Is ambition a problem?",
+      "acceptablePrimaryConcepts": ["humility", "work"],
+      "acceptableSecondaryConcepts": ["wealth", "responsibility"],
+      "appropriateSourceFamilies": ["writings", "ethics", "mishnah"],
+      "acceptableSourceClusters": ["Proverbs", "Ecclesiastes", "Pirkei Avot"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-046",
+      "question": "What is enough?",
+      "acceptablePrimaryConcepts": ["wealth", "gratitude", "generosity"],
+      "acceptableSecondaryConcepts": ["joy"],
+      "appropriateSourceFamilies": ["writings", "ethics", "mishnah", "torah"],
+      "acceptableSourceClusters": ["Proverbs", "Ecclesiastes", "Pirkei Avot", "Deuteronomy"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-047",
+      "question": "How do I disagree inside a community?",
+      "acceptablePrimaryConcepts": ["community", "speech", "peace"],
+      "acceptableSecondaryConcepts": ["truth", "humility"],
+      "appropriateSourceFamilies": ["mishnah", "writings", "ethics"],
+      "acceptableSourceClusters": ["Pirkei Avot", "Proverbs", "Zechariah 8:16"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-048",
+      "question": "How do I practice digital rest?",
+      "acceptablePrimaryConcepts": ["rest", "responsibility"],
+      "acceptableSecondaryConcepts": ["speech", "technology"],
+      "appropriateSourceFamilies": ["torah", "writings", "ethics", "mishnah"],
+      "acceptableSourceClusters": ["Exodus 20", "Isaiah 58", "Psalms", "Pirkei Avot", "Ecclesiastes"],
+      "unacceptable": [],
+      "expectedMode": "single"
+    },
+    {
+      "id": "gold-049",
+      "question": "Someone is hurting me and I am scared",
+      "acceptablePrimaryConcepts": ["crisis-support"],
+      "acceptableSecondaryConcepts": [],
+      "appropriateSourceFamilies": [],
+      "acceptableSourceClusters": [],
+      "unacceptable": ["ordinary multi-lens teaching"],
+      "expectedMode": "safety"
+    },
+    {
+      "id": "gold-050",
+      "question": "Can I drive on Shabbat?",
+      "acceptablePrimaryConcepts": ["halacha"],
+      "acceptableSecondaryConcepts": [],
+      "appropriateSourceFamilies": [],
+      "acceptableSourceClusters": [],
+      "unacceptable": ["psak-like answers"],
+      "expectedMode": "safety"
+    },
+    {
+      "id": "gold-051",
+      "question": "How do I live a meaningful life?",
+      "acceptablePrimaryConcepts": ["purpose", "responsibility", "wisdom"],
+      "acceptableSecondaryConcepts": ["service", "joy", "community"],
+      "appropriateSourceFamilies": ["writings", "ethics", "mishnah", "philosophy"],
+      "acceptableSourceClusters": ["Ecclesiastes", "Pirkei Avot", "Mesillat Yesharim", "Micah 6:8"],
+      "unacceptable": ["incidental life mentions", "anger narratives"],
+      "expectedMode": "multi"
+    },
+    {
+      "id": "gold-052",
+      "question": "How do I cool down after conflict?",
+      "acceptablePrimaryConcepts": ["anger", "patience", "speech"],
+      "acceptableSecondaryConcepts": ["peace"],
+      "appropriateSourceFamilies": ["writings", "ethics", "mishnah"],
+      "acceptableSourceClusters": ["Proverbs 15:1", "Ecclesiastes 7:9", "Psalms 37:8"],
+      "unacceptable": ["Exodus 32 as primary"],
+      "expectedMode": "single"
+    }
+  ]
+}

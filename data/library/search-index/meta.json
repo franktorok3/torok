@@ -1,0 +1,13 @@
+{
+  "builtAt": "2026-07-22T20:43:21.111Z",
+  "passageCount": 25581,
+  "categories": [
+    "ethics",
+    "mishnah",
+    "prophets",
+    "torah",
+    "writings"
+  ],
+  "embeddingModel": null,
+  "note": "Lexical + topic index for server-side retrieval. Full SourceRecord text remains in data/library/shards."
+}
