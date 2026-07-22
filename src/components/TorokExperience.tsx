@@ -322,27 +322,25 @@ export function TorokExperience() {
         <div className="brand-lockup">
           <h1 className="wordmark wordmark-compact">{BRAND_NAME}</h1>
           <p className="brand-descriptor">{BRAND_DESCRIPTOR}</p>
+          <p className="brand-tagline">{BRAND_TAGLINE}</p>
         </div>
         <TorokCharacter
           state={characterState}
           warmth={warmth}
           className="toy-character"
         />
-        <p className="brand-tagline">{BRAND_TAGLINE}</p>
       </header>
 
       <main className="toy-main">
         {showComposer ? (
           <section className="welcome-panel" aria-labelledby="mind-heading">
-            <div className="welcome-intro">
-              <h2 id="mind-heading" className="prompt-heading">
-                What’s on your mind?
-              </h2>
-              <p className="prompt-support">
-                Share a moment. Torok will offer a Jewish teaching and one
-                practical reflection.
-              </p>
-            </div>
+            <h2 id="mind-heading" className="prompt-heading">
+              What’s on your mind?
+            </h2>
+            <p className="prompt-support">
+              Share a moment. Torok will offer a Jewish teaching and one
+              practical reflection.
+            </p>
 
             <form className="compose-form" onSubmit={handleSubmit}>
               <label htmlFor="situation" className="sr-only">
