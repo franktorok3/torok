@@ -1,8 +1,8 @@
 {
-  "ranAt": "2026-07-22T20:51:26.702Z",
+  "ranAt": "2026-07-22T20:54:55.121Z",
   "count": 52,
   "modeAccuracy": 1,
-  "topFamilyAccuracy": 0.981,
+  "topFamilyAccuracy": 1,
   "clusterInTop5Accuracy": 0.808,
   "severeReligiousContextErrors": 0,
   "failures": [
@@ -41,10 +41,6 @@
     {
       "id": "gold-044",
       "reason": "no acceptable cluster in top five"
-    },
-    {
-      "id": "gold-048",
-      "reason": "family mishnah not in torah,writings,ethics"
     },
     {
       "id": "gold-052",
