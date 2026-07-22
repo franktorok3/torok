@@ -836,7 +836,8 @@ a {
   margin-top: 0.85rem;
   display: grid;
   gap: 0.55rem;
-  justify-items: start;
+  justify-items: center;
+  text-align: center;
 }
 
 .footer-disclaimer {
@@ -844,12 +845,19 @@ a {
   color: var(--ink-soft);
   font-size: 0.84rem;
   line-height: 1.45;
+  max-width: 36rem;
 }
 
 .about-panel {
   display: grid;
   gap: 0.65rem;
-  justify-items: start;
+  justify-items: center;
+  width: 100%;
+}
+
+.about-panel .about-body {
+  width: 100%;
+  text-align: left;
 }
 
 .about-body {
