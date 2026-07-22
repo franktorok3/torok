@@ -83,9 +83,9 @@ npx vercel --prod
 
 ## Production URL
 
-_Recorded after deployment in `CURSOR-HANDOFF.md` and below._
+**https://torok.vercel.app**
 
-<!-- PRODUCTION_URL: pending -->
+Works with zero environment variables (local curated engine).
 
 ## Content integrity
 

@@ -6,8 +6,9 @@ Production-ready v1 prototype of Torok: a warm Torah-wisdom companion with a fre
 
 ## Production URL
 
-<!-- Updated after deploy -->
-Pending — see README after Vercel deploy.
+**https://torok.vercel.app**
+
+Deployment inspect: https://vercel.com/frank-torok-s-projects/torok
 
 ## Important files
 
